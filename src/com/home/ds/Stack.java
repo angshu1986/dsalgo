@@ -37,4 +37,9 @@ public class Stack<E> {
 			return ele;
 		}
 	}
+	
+	@Override
+	public String toString() {
+		return null;
+	}
 }
