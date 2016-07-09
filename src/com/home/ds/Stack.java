@@ -10,36 +10,57 @@ public class Stack<E> {
 		}
 	}
 	
-	private Node<E> head;
-	private Node<E> tail;
+	private Node<E> top;
 	private int count;
 	
 	public void push(E ele) {
 		Node<E> newNode = new Node<>(ele);
-		if ((head = tail) == null) {
-			head = tail = newNode;
+		if (top == null) {
+			top = newNode;
 		} else {
-			tail.next = newNode;
+			newNode.next = top;
+			top = newNode;
 		}
 		count++;
 	}
 	
 	public E pop() {
-		if ((head = tail) == null) {
-			throw new IllegalArgumentException("Empty stack");
+		if (top == null)  {
+			throw new RuntimeException("Empty stack");
 		} else {
-			E ele = head.ele;
-			head = head.next;
+			E ele = top.ele;
+			top = top.next;
 			count--;
-			if (count == 0) {
-				tail = null;
-			}
 			return ele;
 		}
 	}
 	
+	public E top() {
+		return top.ele;
+	}
+	
+	public int size() {
+		return count;
+	}
+	
+	public boolean isEmpty() {
+		return (top == null);
+	}
+	
 	@Override
 	public String toString() {
-		return null;
+		StringBuilder sb = new StringBuilder("[");
+		if (count > 0) {
+			Node<E> tmp = top;
+			while (tmp != null) {
+				sb.append(tmp.ele);
+				tmp = tmp.next;
+				if (tmp != null) {
+					sb.append(", ");
+				}
+			}
+		}
+		sb.append("]");
+		return sb.toString();
 	}
 }
