@@ -12,16 +12,37 @@ public class MainClass {
 	
 	public static void main(String[] args) {
 		testQueue();
-		//testStack();
+		testStack();
 	}
 	
 	private static void testQueue() {
 		Queue<Integer> q = new Queue<>();
+		System.out.println("is empty queue " + q.isEmpty());
 		for (int i = 0; i < 10; i++) {
 			int x = getRandomInteger(50, 500);
 			System.out.println("Adding " + x);
 			q.enq(x);
 		}
+		System.out.println(q.toString());
+		System.out.println("is empty queue " + q.isEmpty());
+		System.out.println("Size " + q.size());
+		q.deq();
+		q.deq();
+		q.deq();
+		q.deq();
+		System.out.println("is empty queue " + q.isEmpty());
+		System.out.println("Size " + q.size());
+		System.out.println(q.toString());
+		q.enq(99);
+		q.enq(299);
+		System.out.println("Size " + q.size());
+		System.out.println(q.toString());
+		int size = q.size();
+		for (int i = 0; i < size; i++) {
+			q.deq();
+		}
+		System.out.println("is empty queue " + q.isEmpty());
+		System.out.println("Size " + q.size());
 		System.out.println(q.toString());
 	}
 	
