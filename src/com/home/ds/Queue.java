@@ -16,7 +16,7 @@ public class Queue<E> {
 	
 	public void enq(E ele) {
 		Node<E> newNode = new Node<>(ele);
-		if ((head = tail) == null) {
+		if ((head) == null) {
 			head = tail = newNode;
 		} else {
 			tail.next = newNode;
@@ -36,5 +36,30 @@ public class Queue<E> {
 			}
 			return ele;
 		}
+	}
+	
+	public int size() {
+		return count;
+	}
+	
+	public boolean isEmpty() {
+		return (head == null);
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("[");
+		Node<E> tmp = head;
+		if (count > 0) {
+			while (tmp != null) {
+				sb.append(tmp.ele);
+				tmp = tmp.next;
+				if (tmp != null) {
+					sb.append(", ");
+				}
+			}
+		}
+		sb.append("]");
+		return sb.toString();
 	}
 }

@@ -2,6 +2,7 @@ package com.main;
 
 import java.util.Random;
 
+import com.home.ds.Queue;
 import com.home.ds.Stack;
 
 public class MainClass {
@@ -10,9 +11,19 @@ public class MainClass {
 	private static final Random r = new Random();
 	
 	public static void main(String[] args) {
-		testStack();
+		testQueue();
+		//testStack();
 	}
 	
+	private static void testQueue() {
+		Queue<Integer> q = new Queue<>();
+		for (int i = 0; i < 10; i++) {
+			int x = getRandomInteger(50, 500);
+			System.out.println("Adding " + x);
+			q.enq(x);
+		}
+		System.out.println(q.toString());
+	}
 	
 	private static void testStack() {
 		Stack<Integer> s = new Stack<>();
