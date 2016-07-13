@@ -38,6 +38,10 @@ public class Queue<E> {
 		}
 	}
 	
+	public E peek() {
+		return tail.ele;
+	}
+	
 	public int size() {
 		return count;
 	}
