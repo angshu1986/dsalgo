@@ -14,18 +14,7 @@ public class LinkedList<E> {
 	private Node<E> tail;
 	private int count;
 	
-	public void addFirst(E ele) {
-		Node<E> newNode = new Node<>(ele);
-		if (head == null) {
-			head = tail = newNode;
-		} else {
-			newNode.next = head;
-			head = newNode;
-		}
-		count++;
-	}
-	
-	public void addLast(E ele) {
+	public void add(E ele) {
 		Node<E> newNode = new Node<>(ele);
 		if (head == null) {
 			head = tail = newNode;
@@ -34,40 +23,51 @@ public class LinkedList<E> {
 			tail = newNode;
 		}
 		count++;
-	}
+}
 	
-	public E removeFirst() {
-		if (count == 0) {
-			throw new RuntimeException("Empty list");
-		} else {
-			E ele = head.ele;
+	public E remove(E ele) {
+		if (head.ele.equals(ele)) {
+			E y = head.ele;
 			head = head.next;
-			if (--count == 0) {
-				tail = null;
-			}
-			return ele;
+			count--;
+			return y;
 		}
+		Node<E> tmp = head;
+		E x = null;
+		while (tmp != null) {
+			tmp = tmp.next;
+			if (tmp.ele.equals(ele)) {
+				tmp = tmp.next.next;
+				count--;
+				break;
+			}
+		}
+		
+		return x;
 	}
 	
-	public E removeLast() {
-		if (count == 0) {
-			throw new RuntimeException("Empty list");
-		} else {
-			E ele = tail.ele;
+	public int size() {
+		return count;
+	}
+	
+	public boolean isEmpty() {
+		return count == 0;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("[");
+		if (count > 0) {
 			Node<E> tmp = head;
-			while (true) {
-				if (tmp.next == tail) {
-					tail.ele = null;
-					tail = tmp;
-					break;
+			while (tmp != null) {
+				sb.append(tmp.ele);
+				tmp = tmp.next;
+				if (tmp != null) {
+					sb.append(", ");
 				}
-				tmp = tmp.next; //TODO: continue from here
 			}
-			return ele;
 		}
-	}
-	
-	public void add(E ele) {
-		addFirst(ele);
+		sb.append("]");
+		return sb.toString();
 	}
 }
