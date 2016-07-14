@@ -5,51 +5,114 @@ public class LinkedList<E> {
 	private static class Node<E> {
 		private E ele;
 		private Node<E> next;
+
 		public Node(E ele) {
 			this.ele = ele;
 		}
 	}
-	
+
 	private Node<E> head;
-	private Node<E> tail;
 	private int count;
-	
+
 	public void add(E ele) {
 		Node<E> newNode = new Node<>(ele);
 		if (head == null) {
-			head = tail = newNode;
+			head = newNode;
 		} else {
-			tail.next = newNode;
-			tail = newNode;
+			Node<E> tmp = head;
+			while (tmp.next != null) {
+				tmp = tmp.next;
+			}
+			tmp.next = newNode;
 		}
 		count++;
-}
+	}
 	
+	public void add(E ele, int index) {//TODO: complete this method
+		if (index < 0 || index > count - 1) {
+			throw new IndexOutOfBoundsException("Index: " + index + " Size: " + count);
+		}
+		Node<E> newNode = new Node<>(ele);
+		Node<E> tmp = head;
+		int i = 0;
+		while (i++ < index - 1) {
+			tmp = tmp.next;
+		}
+		newNode.next = tmp.next;
+		tmp.next = newNode;
+		count++;
+		
+	}
+
+	public E get(int index) {
+		if (index < 0 || index > count - 1) {
+			throw new IndexOutOfBoundsException("Index: " + index + " Size: " + count);
+		}
+		Node<E> tmp = head;
+		int i = 0;
+		while (tmp != null) {
+			if (i++ == index) {
+				return tmp.ele;
+			}
+			tmp = tmp.next;
+		}
+		return null;
+	}
+
 	public E remove(E ele) {
 		if (head.ele.equals(ele)) {
 			E y = head.ele;
 			head = head.next;
 			count--;
 			return y;
-		}
-		Node<E> tmp = head;
-		E x = null;
-		while (tmp != null) {
-			tmp = tmp.next;
-			if (tmp.ele.equals(ele)) {
-				tmp = tmp.next.next;
-				count--;
-				break;
+		} else {
+			Node<E> tmp = head;
+			E x = null;
+			while (tmp != null) {
+				if (tmp.next.ele.equals(ele)) {
+					x = tmp.next.ele;
+					Node<E> prev = tmp.next;
+					tmp.next = tmp.next.next;
+					count--;
+					prev.ele = null;
+					prev.next = null;
+					break;
+				}
+				tmp = tmp.next;
 			}
+			return x;
 		}
-		
-		return x;
 	}
-	
+
+	public E remove(int index) {
+		if (index < 0 || index > count - 1) {
+			throw new IndexOutOfBoundsException("Index: " + index + " Size: " + count);
+		}
+		if (index == 0) {
+			E ele = head.ele;
+			head = head.next;
+			count--;
+			return ele;
+		} else {
+			Node<E> tmp = head;
+			int visited = 0;
+			while (tmp != null) {
+				if (visited++ == (index - 1)) {
+					E ele = tmp.next.ele;
+					tmp.next = tmp.next.next;
+					count--;
+					return ele;
+				}
+				tmp = tmp.next;
+			}
+			return null;
+		}
+	}
+
 	public int size() {
 		return count;
 	}
-	
+
 	public boolean isEmpty() {
 		return count == 0;
 	}

@@ -6,11 +6,11 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-public class LinkedListTest {
+public class ArrayListTest {
 
 	@Test
 	public void test() {
-		LinkedList<Integer> l = new LinkedList<>();
+		ArrayList<Integer> l = new ArrayList<>();
 		assertTrue("Check empty list", l.isEmpty());
 		assertEquals("Check zero size list", 0, l.size());
 		l.add(45);
