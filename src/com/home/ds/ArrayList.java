@@ -41,17 +41,18 @@ public class ArrayList<E> {
 		checkRange(index);
 		E e = (E) arr[index];
 		System.arraycopy(arr, index + 1, arr, index, count - index - 1);
+		arr[count - 1] = null;
 		count--;
 		return e;
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	public E remove(E ele) {//TODO: check this
-		for (int i = 0; i< arr.length; i++) {
+	public E remove(E ele) {
+		for (int i = 0; i < arr.length; i++) {
 			if (ele.equals(arr[i])) {
 				E returned = (E) arr[i];
-				System.arraycopy(arr, i+1, arr, i, arr.length - i);
-				arr[arr.length - 1] = null;
+				System.arraycopy(arr, i + 1, arr, i, arr.length - i - 1);
+				arr[count - 1] = null;
 				count--;
 				return returned;
 			}
@@ -83,10 +84,10 @@ public class ArrayList<E> {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder("[");
-		if (arr.length > 0) {
-			for (int i = 0; i < arr.length; i++) {
+		if (count > 0) {
+			for (int i = 0; i < count; i++) {
 				sb.append(arr[i]);
-				if (i < arr.length - 1) {
+				if (i < count - 1) {
 					sb.append(", ");
 				}
 			}

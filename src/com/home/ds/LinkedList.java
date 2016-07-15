@@ -27,8 +27,8 @@ public class LinkedList<E> {
 		}
 		count++;
 	}
-	
-	public void add(E ele, int index) {//TODO: complete this method
+
+	public void add(E ele, int index) {
 		if (index < 0 || index > count - 1) {
 			throw new IndexOutOfBoundsException("Index: " + index + " Size: " + count);
 		}
@@ -41,7 +41,7 @@ public class LinkedList<E> {
 		newNode.next = tmp.next;
 		tmp.next = newNode;
 		count++;
-		
+
 	}
 
 	public E get(int index) {

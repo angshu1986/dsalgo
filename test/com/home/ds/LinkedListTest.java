@@ -58,6 +58,11 @@ public class LinkedListTest {
 		assertEquals("Check removed element", 420, removed);
 		System.out.println(l.toString());
 		assertEquals("Check get value", 745, l.get(2).intValue());
+		l.add(12, 4);
+		assertFalse("Check non empty list", l.isEmpty());
+		assertEquals("Check non zero size list", 9, l.size());
+		assertEquals("Check added element", 12, l.get(4).intValue());
+		System.out.println(l.toString());
 	}
 
 }
