@@ -59,4 +59,10 @@ public class DoublyLinkedList<E> {
 		count--;
 		return ele;
 	}
+	
+	public void add(E ele, int index) {//TODO: complete this method
+		if (index < 0 || index > count - 1) {
+			throw new IndexOutOfBoundsException("Index: " + index + " Size: " + count);
+		}
+	}
 }
