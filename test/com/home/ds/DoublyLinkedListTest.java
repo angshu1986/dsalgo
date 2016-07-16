@@ -43,5 +43,7 @@ public class DoublyLinkedListTest {
 		System.out.println(l.toString());
 		l.remove(6);
 		System.out.println(l.toString());
+		System.out.println(l.get(1));
+		System.out.println(l.get(5));
 	}
 }

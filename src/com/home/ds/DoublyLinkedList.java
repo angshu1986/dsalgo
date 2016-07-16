@@ -188,6 +188,27 @@ public class DoublyLinkedList<E> {
 			return x;
 		}
 	}
+	
+	public E get(int index) {
+		if (index < 0 || index > count - 1) {
+			throw new IndexOutOfBoundsException("Index: " + index + " Size: " + count);
+		}
+		if (index < (count / 2)) {
+			int s = 0;
+			Node<E> tmp = head;
+			while (s++ < index) {
+				tmp = tmp.next;
+			}
+			return tmp.ele;
+		} else {
+			int s = count - 1;
+			Node<E> tmp = tail;
+			while (s-- > index) {
+				tmp = tmp.prev;
+			}
+			return tmp.ele;
+		}
+	}
 
 	@Override
 	public String toString() {

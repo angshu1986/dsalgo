@@ -4,13 +4,14 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import com.home.ds.adt.Iqueue;
 import com.home.ds.utils.TestUtils;
 
 public class QueueTest {
 
 	@Test
 	public void testAll() {
-		Queue<Integer> q = new Queue<>();
+		Iqueue<Integer> q = new Queue<>();
 		assertTrue("is empty queue", q.isEmpty());
 		assertEquals("Check zero size", 0, q.size());
 		q.enq(191);

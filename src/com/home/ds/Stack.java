@@ -1,18 +1,22 @@
 package com.home.ds;
 
-public class Stack<E> {
+import com.home.ds.adt.IStack;
+
+public class Stack<E> implements IStack<E> {
 
 	private static class Node<E> {
 		private E ele;
 		private Node<E> next;
+
 		public Node(E ele) {
 			this.ele = ele;
 		}
 	}
-	
+
 	private Node<E> top;
 	private int count;
-	
+
+	@Override
 	public void push(E ele) {
 		Node<E> newNode = new Node<>(ele);
 		if (top == null) {
@@ -23,9 +27,10 @@ public class Stack<E> {
 		}
 		count++;
 	}
-	
+
+	@Override
 	public E pop() {
-		if (top == null)  {
+		if (top == null) {
 			throw new RuntimeException("Empty stack");
 		} else {
 			E ele = top.ele;
@@ -34,19 +39,22 @@ public class Stack<E> {
 			return ele;
 		}
 	}
-	
+
+	@Override
 	public E top() {
 		return top.ele;
 	}
-	
+
+	@Override
 	public int size() {
 		return count;
 	}
-	
+
+	@Override
 	public boolean isEmpty() {
 		return (top == null);
 	}
-	
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder("[");
