@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import com.home.ds.utils.TestUtils;
+
 public class DoublyLinkedListTest {
 
 	@Test
@@ -21,16 +23,25 @@ public class DoublyLinkedListTest {
 		System.out.println(l.toString());
 		l.removeFirst();
 		l.removeLast();
-		/*l.removeLast();
 		l.removeLast();
 		l.removeLast();
-		*/System.out.println(l.toString());
+		l.removeLast();
+		System.out.println(l.toString());
 		l.add(31, 1);
 		System.out.println(l.toString());
-		l.add(100, 4);
+		l.add(100, 2);
 		System.out.println(l.toString());
-		l.remove(10);
+		l.remove(new Integer(10));
+		System.out.println(l.toString());
+		l.addFirst(161);
+		l.addLast(451);
+		l.addFirst(611);
+		l.addLast(425);
+		l.add(TestUtils.getRandomInteger(10, 400), 4);
+		System.out.println(l.toString());
+		l.remove(1);
+		System.out.println(l.toString());
+		l.remove(6);
 		System.out.println(l.toString());
 	}
-
 }

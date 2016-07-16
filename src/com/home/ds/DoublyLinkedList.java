@@ -104,8 +104,8 @@ public class DoublyLinkedList<E> {
 		}
 		count++;
 	}
-	
-	public E remove(E ele)  {
+
+	public E remove(E ele) {
 		Node<E> tmp = head;
 		E x = null;
 		while (tmp != null) {
@@ -113,16 +113,80 @@ public class DoublyLinkedList<E> {
 				x = tmp.ele;
 				Node<E> prev = tmp.prev;
 				Node<E> next = tmp.next;
-				prev.next = next;
-				next.prev = prev;
+				if (prev == null) {
+					head = next;
+				} else {
+					prev.next = next;
+				}
+				if (next == null) {
+					tail = prev;
+				} else {
+					next.prev = prev;
+				}
+				tmp.ele = null;
+				tmp.prev = null;
+				tmp.next = null;
 				count--;
-				prev.ele = null;
-				prev.next = null;
 				break;
 			}
 			tmp = tmp.next;
 		}
 		return x;
+	}
+
+	public E remove(int index) {
+		if (index < 0 || index > count - 1) {
+			throw new IndexOutOfBoundsException("Index: " + index + " Size: " + count);
+		}
+		if (index < (count / 2)) {
+			int s = 0;
+			Node<E> tmp = head;
+			while (s++ < index) {
+				tmp = tmp.next;
+			}
+			E x = tmp.ele;
+			Node<E> prev = tmp.prev;
+			Node<E> next = tmp.next;
+			if (prev == null) {
+				head = next;
+			} else {
+				prev.next = next;
+			}
+			if (next == null) {
+				tail = prev;
+			} else {
+				next.prev = prev;
+			}
+			tmp.ele = null;
+			tmp.prev = null;
+			tmp.next = null;
+			count--;
+			return x;
+		} else {
+			int s = count - 1;
+			Node<E> tmp = tail;
+			while (s-- > index) {
+				tmp = tmp.prev;
+			}
+			E x = tmp.ele;
+			Node<E> prev = tmp.prev;
+			Node<E> next = tmp.next;
+			if (prev == null) {
+				head = next;
+			} else {
+				prev.next = next;
+			}
+			if (next == null) {
+				tail = prev;
+			} else {
+				next.prev = prev;
+			}
+			tmp.ele = null;
+			tmp.prev = null;
+			tmp.next = null;
+			count--;
+			return x;
+		}
 	}
 
 	@Override
