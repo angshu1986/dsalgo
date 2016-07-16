@@ -26,7 +26,10 @@ public class DoublyLinkedListTest {
 		l.removeLast();
 		*/System.out.println(l.toString());
 		l.add(31, 1);
+		System.out.println(l.toString());
 		l.add(100, 4);
+		System.out.println(l.toString());
+		l.remove(10);
 		System.out.println(l.toString());
 	}
 

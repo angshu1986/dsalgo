@@ -76,29 +76,53 @@ public class DoublyLinkedList<E> {
 		return count == 0;
 	}
 
-	public void add(E ele, int index) {// TODO: complete this method
+	public void add(E ele, int index) {
 		if (index < 0 || index > count - 1) {
 			throw new IndexOutOfBoundsException("Index: " + index + " Size: " + count);
 		}
 		Node<E> newNode = new Node<>(ele);
-		//if (index < (count / 2)) {
+		if (index < (count / 2)) {
 			Node<E> tmp = head;
 			int i = 0;
 			while (i++ < index - 1) {
 				tmp = tmp.next;
 			}
 			newNode.next = tmp.next;
+			tmp.next.prev = newNode;
 			tmp.next = newNode;
-		/*} else {
+			newNode.prev = tmp;
+		} else {
 			Node<E> tmp = tail;
 			int i = count - 1;
 			while (i-- > index) {
 				tmp = tmp.prev;
 			}
 			newNode.prev = tmp.prev;
+			tmp.prev.next = newNode;
 			tmp.prev = newNode;
-		}*/
+			newNode.next = tmp;
+		}
 		count++;
+	}
+	
+	public E remove(E ele)  {
+		Node<E> tmp = head;
+		E x = null;
+		while (tmp != null) {
+			if (tmp.ele.equals(ele)) {
+				x = tmp.ele;
+				Node<E> prev = tmp.prev;
+				Node<E> next = tmp.next;
+				prev.next = next;
+				next.prev = prev;
+				count--;
+				prev.ele = null;
+				prev.next = null;
+				break;
+			}
+			tmp = tmp.next;
+		}
+		return x;
 	}
 
 	@Override
