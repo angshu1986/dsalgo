@@ -1,6 +1,8 @@
 package com.home.ds;
 
-public class LinkedList<E> {
+import com.home.ds.adt.IList;
+
+public class LinkedList<E> implements IList<E> {
 
 	private static class Node<E> {
 		private E ele;
@@ -14,6 +16,7 @@ public class LinkedList<E> {
 	private Node<E> head;
 	private int count;
 
+	@Override
 	public void add(E ele) {
 		Node<E> newNode = new Node<>(ele);
 		if (head == null) {
@@ -28,6 +31,7 @@ public class LinkedList<E> {
 		count++;
 	}
 
+	@Override
 	public void add(E ele, int index) {
 		if (index < 0 || index > count - 1) {
 			throw new IndexOutOfBoundsException("Index: " + index + " Size: " + count);
@@ -44,6 +48,7 @@ public class LinkedList<E> {
 
 	}
 
+	@Override
 	public E get(int index) {
 		if (index < 0 || index > count - 1) {
 			throw new IndexOutOfBoundsException("Index: " + index + " Size: " + count);
@@ -59,6 +64,7 @@ public class LinkedList<E> {
 		return null;
 	}
 
+	@Override
 	public E remove(E ele) {
 		if (head.ele.equals(ele)) {
 			E y = head.ele;
@@ -84,6 +90,7 @@ public class LinkedList<E> {
 		}
 	}
 
+	@Override
 	public E remove(int index) {
 		if (index < 0 || index > count - 1) {
 			throw new IndexOutOfBoundsException("Index: " + index + " Size: " + count);
@@ -109,10 +116,12 @@ public class LinkedList<E> {
 		}
 	}
 
+	@Override
 	public int size() {
 		return count;
 	}
 
+	@Override
 	public boolean isEmpty() {
 		return count == 0;
 	}
