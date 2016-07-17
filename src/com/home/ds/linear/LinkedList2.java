@@ -1,4 +1,4 @@
-package com.home.ds;
+package com.home.ds.linear;
 
 import com.home.ds.adt.IList;
 

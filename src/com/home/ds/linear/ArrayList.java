@@ -1,4 +1,4 @@
-package com.home.ds;
+package com.home.ds.linear;
 
 import java.util.Arrays;
 
