@@ -2,7 +2,9 @@ package com.home.ds.linear;
 
 import java.util.Arrays;
 
-public class ArrayList<E> {
+import com.home.ds.adt.IList;
+
+public class ArrayList<E> implements IList<E> {
 
 	private int capacity;
 	private Object[] arr;
@@ -17,11 +19,13 @@ public class ArrayList<E> {
 		this(10);
 	}
 
+	@Override
 	public void add(E e) {
 		ensureCapacity();
 		arr[count++] = e;
 	}
 
+	@Override
 	public void add(E e, int index) {
 		checkRange(index);
 		ensureCapacity();
@@ -31,12 +35,14 @@ public class ArrayList<E> {
 	}
 
 	@SuppressWarnings("unchecked")
+	@Override
 	public E get(int index) {
 		checkRange(index);
 		return (E) arr[index];
 	}
 
 	@SuppressWarnings("unchecked")
+	@Override
 	public E remove(int index) {
 		checkRange(index);
 		E e = (E) arr[index];
@@ -47,6 +53,7 @@ public class ArrayList<E> {
 	}
 
 	@SuppressWarnings("unchecked")
+	@Override
 	public E remove(E ele) {
 		for (int i = 0; i < arr.length; i++) {
 			if (ele.equals(arr[i])) {
@@ -60,10 +67,12 @@ public class ArrayList<E> {
 		return null;
 	}
 
+	@Override
 	public boolean isEmpty() {
 		return count == 0;
 	}
 
+	@Override
 	public int size() {
 		return count;
 	}
