@@ -1,8 +1,8 @@
 package com.home.ds;
 
-import com.home.ds.adt.Iqueue;
+import com.home.ds.adt.IQueue;
 
-public class Queue<E> implements Iqueue<E> {
+public class Queue<E> implements IQueue<E> {
 
 	private static class Node<E> {
 		private E ele;
@@ -17,7 +17,7 @@ public class Queue<E> implements Iqueue<E> {
 	private int count;
 	
 	@Override
-	public void enq(E ele) {
+	public void offer(E ele) {
 		Node<E> newNode = new Node<>(ele);
 		if ((head) == null) {
 			head = tail = newNode;
@@ -29,7 +29,7 @@ public class Queue<E> implements Iqueue<E> {
 	}
 	
 	@Override
-	public E deq() {
+	public E poll() {
 		if (head == null) {
 			throw new RuntimeException("Empty queue");
 		} else {

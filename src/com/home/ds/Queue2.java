@@ -1,8 +1,8 @@
 package com.home.ds;
 
-import com.home.ds.adt.Iqueue;
+import com.home.ds.adt.IQueue;
 
-public class Queue2<E> implements Iqueue<E> {
+public class Queue2<E> implements IQueue<E> {
 
 	private DoublyLinkedList<E> l;
 
@@ -11,12 +11,12 @@ public class Queue2<E> implements Iqueue<E> {
 	}
 
 	@Override
-	public void enq(E ele) {
+	public void offer(E ele) {
 		l.addFirst(ele);
 	}
 
 	@Override
-	public E deq() {
+	public E poll() {
 		return l.removeLast();
 	}
 
@@ -34,5 +34,8 @@ public class Queue2<E> implements Iqueue<E> {
 	public boolean isEmpty() {
 		return l.isEmpty();
 	}
-
+	
+	@Override public String toString() {
+		return l.toString();
+	}
 }

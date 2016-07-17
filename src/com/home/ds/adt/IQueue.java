@@ -1,10 +1,10 @@
 package com.home.ds.adt;
 
-public interface Iqueue<E> {
+public interface IQueue<E> {
 
-	void enq(E ele);
+	void offer(E ele);
 
-	E deq();
+	E poll();
 
 	E peek();
 

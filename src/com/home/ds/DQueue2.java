@@ -1,27 +1,42 @@
 package com.home.ds;
 
-import com.home.ds.adt.IStack;
+import com.home.ds.adt.IDQueue;
 
-public class Stack2<E> implements IStack<E> {
+public class DQueue2<E> implements IDQueue<E> {
 
 	private DoublyLinkedList<E> l;
 
-	public Stack2() {
+	public DQueue2() {
 		l = new DoublyLinkedList<>();
 	}
 
 	@Override
-	public void push(E ele) {
+	public void offerFirst(E ele) {
+		l.addFirst(ele);
+	}
+
+	@Override
+	public void offerLast(E ele) {
 		l.addLast(ele);
 	}
 
 	@Override
-	public E pop() {
+	public E pollFirst() {
+		return l.removeFirst();
+	}
+
+	@Override
+	public E pollLast() {
 		return l.removeLast();
 	}
 
 	@Override
-	public E top() {
+	public E peekFirst() {
+		return l.get(0);
+	}
+
+	@Override
+	public E peekLast() {
 		return l.get(size() - 1);
 	}
 

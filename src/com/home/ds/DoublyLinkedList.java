@@ -193,6 +193,12 @@ public class DoublyLinkedList<E> {
 		if (index < 0 || index > count - 1) {
 			throw new IndexOutOfBoundsException("Index: " + index + " Size: " + count);
 		}
+		if (index == 0) {
+			return head.ele;
+		}
+		if (index == (count - 1)) {
+			return tail.ele;
+		}
 		if (index < (count / 2)) {
 			int s = 0;
 			Node<E> tmp = head;
