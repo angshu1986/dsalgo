@@ -19,7 +19,7 @@ public class Queue<E> implements IQueue<E> {
 	@Override
 	public void offer(E ele) {
 		Node<E> newNode = new Node<>(ele);
-		if ((head) == null) {
+		if (head == null) {
 			head = tail = newNode;
 		} else {
 			tail.next = newNode;

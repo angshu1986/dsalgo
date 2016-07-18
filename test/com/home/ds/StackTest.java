@@ -35,6 +35,19 @@ public class StackTest {
 		Stack<Integer> s = new Stack<>();
 		s.pop();
 	}
+	
+	@Test(expected = RuntimeException.class)
+	public void testPopException2() {
+		Stack<Integer> s = new Stack<>();
+		s.push(12);
+		s.push(34);
+		assertEquals("Check size of stack", 2, s.size());
+		s.pop();
+		s.pop();
+		assertEquals("Check size of stack", 0, s.size());
+		assertTrue("Empty stack", s.isEmpty());
+		s.pop();
+	}
 
 	@Test
 	public void testTop() {

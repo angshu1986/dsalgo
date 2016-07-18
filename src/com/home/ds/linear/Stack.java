@@ -56,14 +56,19 @@ public class Stack<E> implements IStack<E> {
 	}
 
 	@Override
-	public String toString() {
+	public String toString() {//TODO: print in same logic using recursion
 		StringBuilder sb = new StringBuilder("[");
 		if (count > 0) {
 			Node<E> tmp = top;
+			Object arr[] = new Object[count];
+			int i = 0;
 			while (tmp != null) {
-				sb.append(tmp.ele);
+				arr[i++] = tmp.ele;
 				tmp = tmp.next;
-				if (tmp != null) {
+			}
+			for (; i > 0; i--) {
+				sb.append(arr[i - 1]);
+				if (i > 1) {
 					sb.append(", ");
 				}
 			}
