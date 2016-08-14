@@ -19,6 +19,17 @@ public class StackTest {
 		}
 		assertEquals("Check whether elements are added", 10, s.size());
 		System.out.println(s.toString());
+		for (int i = 0; i < 10; i++) {
+			int x = TestUtils.getRandomInteger(10, 90);
+			System.out.println("Adding " + x);
+			s.push(x);
+		}
+		assertEquals("Check whether elements are added", 20, s.size());
+		System.out.println(s.toString());
+		s.pop();
+		s.pop();
+		assertEquals("Check whether elements are added", 18, s.size());
+		System.out.println(s.toString());
 	}
 
 	@Test
