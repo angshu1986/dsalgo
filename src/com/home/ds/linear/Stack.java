@@ -42,6 +42,9 @@ public class Stack<E> implements IStack<E> {
 
 	@Override
 	public E top() {
+		if (top == null) {
+			return null;
+		}
 		return top.ele;
 	}
 
