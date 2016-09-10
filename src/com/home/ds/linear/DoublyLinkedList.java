@@ -1,5 +1,7 @@
 package com.home.ds.linear;
 
+import java.util.Iterator;
+
 public class DoublyLinkedList<E> {
 
 	private static class Node<E> {
@@ -214,6 +216,29 @@ public class DoublyLinkedList<E> {
 			}
 			return tmp.ele;
 		}
+	}
+
+
+	public Iterator<E> iterator() {
+		return new Itr();
+	}
+	
+	private class Itr implements Iterator<E> {
+
+		Node<E> tmp = head;
+
+		@Override
+		public boolean hasNext() {
+			return tmp != null;
+		}
+
+		@Override
+		public E next() {
+			E ele = tmp.ele;
+			tmp = tmp.next;
+			return ele;
+		}
+
 	}
 
 	@Override

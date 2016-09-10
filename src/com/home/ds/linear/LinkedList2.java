@@ -1,5 +1,7 @@
 package com.home.ds.linear;
 
+import java.util.Iterator;
+
 import com.home.ds.adt.IList;
 
 public class LinkedList2<E> implements IList<E> {
@@ -50,4 +52,8 @@ public class LinkedList2<E> implements IList<E> {
 		return l.toString();
 	}
 
+	@Override
+	public Iterator<E> iterator() {
+		return l.iterator();
+	}
 }

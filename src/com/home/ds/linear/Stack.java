@@ -1,7 +1,5 @@
 package com.home.ds.linear;
 
-import java.util.Iterator;
-
 import com.home.ds.adt.IStack;
 
 public class Stack<E> implements IStack<E> {
@@ -78,30 +76,5 @@ public class Stack<E> implements IStack<E> {
 			sb.append(", ");
 			sb.append(e.ele);
 		}
-	}
-	
-	private class Itr implements Iterator<E> {
-
-		private Node<E> top;
-		private Itr(Node<E> top) {
-			this.top = top;
-		}
-		@Override
-		public boolean hasNext() {
-			return (top == null);
-		}
-
-		@Override
-		public E next() {
-			E ele = top.ele;
-			top = top.next;
-			return ele;
-		}
-		
-	}
-
-	@Override
-	public Iterator<E> iterator() {
-		return new Itr(top);
 	}
 }

@@ -1,6 +1,6 @@
 package com.home.ds.adt;
 
-public interface IList<E> {
+public interface IList<E> extends Iterable<E> {
 
 	void add(E ele);
 

@@ -1,7 +1,5 @@
 package com.home.ds.linear;
 
-import java.util.Iterator;
-
 import com.home.ds.adt.IStack;
 
 public class Stack2<E> implements IStack<E> {
@@ -40,23 +38,5 @@ public class Stack2<E> implements IStack<E> {
 	@Override
 	public String toString() {
 		return l.toString();
-	}
-	
-	@Override
-	public Iterator<E> iterator() {
-		return new Iterator<E>() {
-
-			@Override
-			public boolean hasNext() {
-				// TODO Auto-generated method stub
-				return false;
-			}
-
-			@Override
-			public E next() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-		};
-	}
+	}	
 }

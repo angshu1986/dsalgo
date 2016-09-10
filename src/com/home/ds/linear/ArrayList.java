@@ -1,6 +1,7 @@
 package com.home.ds.linear;
 
 import java.util.Arrays;
+import java.util.Iterator;
 
 import com.home.ds.adt.IList;
 
@@ -103,6 +104,27 @@ public class ArrayList<E> implements IList<E> {
 		}
 		sb.append("]");
 		return sb.toString();
+
+	}
+
+	@Override
+	public Iterator<E> iterator() {
+		return new Itr();
+	}
+	
+	private class Itr implements Iterator<E> {
+
+		int c = 0;
+
+		@Override
+		public boolean hasNext() {
+			return c == count - 1;
+		}
+
+		@Override
+		public E next() {
+			return (E) arr[c++];
+		}
 
 	}
 }
