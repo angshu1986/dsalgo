@@ -1,4 +1,4 @@
-package com.home.ds.utils;
+package com.home.ds.util;
 
 import java.util.Random;
 

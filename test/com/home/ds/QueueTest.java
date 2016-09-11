@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import com.home.ds.adt.IQueue;
 import com.home.ds.linear.Queue;
-import com.home.ds.utils.TestUtils;
+import com.home.ds.util.TestUtils;
 
 public class QueueTest {
 

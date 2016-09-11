@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import com.home.ds.linear.Stack;
-import com.home.ds.utils.TestUtils;
+import com.home.ds.util.TestUtils;
 
 public class StackTest {
 
