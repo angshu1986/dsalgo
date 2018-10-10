@@ -1,9 +1,11 @@
 package com.home.ds.linear;
 
 import java.util.Comparator;
+import java.util.List;
 
 import com.home.ds.adt.IBinaryTree;
 import com.home.ds.adt.IList;
+import com.home.ds.adt.IQueue;
 
 public class BinaryTree<T> implements IBinaryTree<T> {
 
@@ -81,14 +83,38 @@ public class BinaryTree<T> implements IBinaryTree<T> {
 
 	@Override
 	public boolean isFullTree() {
-		// TODO Auto-generated method stub
-		return false;
+		return isFullTree(root);
+	}
+	
+	private boolean isFullTree(Node<T> node) {
+		if (node == null) {
+			return true;
+		}
+		if (node.left == null && node.right == null) {
+			return true;
+		}
+		if (node.left != null && node.right == null) {
+			return false;
+		}
+		if (node.left == null && node.right != null) {
+			return false;
+		}
+		return isFullTree(node.left) && isFullTree(node.right);
 	}
 
 	@Override
 	public boolean isComplete() {
-		// TODO Auto-generated method stub
-		return false;
+		return isComplete(root, 0);
+	}
+	
+	private boolean isComplete(Node<T> node, int index) {
+		if (node == null) {
+			return true;
+		}
+		if (index >= size) {
+			return false;
+		}
+		return isComplete(node.left, (2 * index) + 1) && isComplete(node.right, 2 * (index + 1));
 	}
 
 	@Override
@@ -122,6 +148,42 @@ public class BinaryTree<T> implements IBinaryTree<T> {
 	@Override
 	public int size() {
 		return size;
+	}
+	
+	@Override
+	public int runningCount() {
+		return runningCount(root);
+	}
+	
+	private int runningCount(Node<T> node) {
+		if (node == null) {
+			return 0;
+		}
+		return runningCount(node.left) + runningCount(node.right) + 1;
+	}
+	
+	@Override
+	public int minDepth() {
+		return minDepth(root);
+	}
+	
+	private int minDepth(Node<T> node) {
+		if (node == null) {
+			return 0;
+		}
+		if (node.left == null && node.right == null) {
+			return 1;
+		}
+		/*if (node.left == null) {
+            return minDepth(node.right) + 1; 
+		}
+        // If right subtree is NULL, recur for left subtree 
+        if (node.right == null) { 
+            return minDepth(node.left) + 1;
+        }*/
+		int minLeft = minDepth(node.left) + 1;
+		int minRight = minDepth(node.right) + 1;
+		return Math.min(minLeft, minRight) + 1;
 	}
 
 	@Override
@@ -222,8 +284,75 @@ public class BinaryTree<T> implements IBinaryTree<T> {
 
 	@Override
 	public void printAsTree() {
-		// TODO Auto-generated method stub
-		
+		IQueue<HorizontalDistancePair<T>> q = new Queue<>();
+		List<HorizontalDistancePair<T>> l = new java.util.ArrayList<>();
+		HorizontalDistancePair<T> p = new HorizontalDistancePair<>(0, root);
+		l.add(p);
+		q.offer(p);
+		while (!q.isEmpty()) {
+			HorizontalDistancePair<T> tmp = q.poll();
+			if (tmp.node.left != null) {
+				HorizontalDistancePair<T> left = new HorizontalDistancePair<>(tmp.hd - 1, tmp.node.left);
+				q.offer(left);
+				l.add(left);
+			}
+			if (tmp.node.right != null) {
+				HorizontalDistancePair<T> left = new HorizontalDistancePair<>(tmp.hd + 1, tmp.node.right);
+				q.offer(left);
+				l.add(left);
+			}
+		}
+		System.out.println(l);
+		int tabCount = Math.abs(l.stream().mapToInt(m -> m.hd).min().getAsInt());
+		System.out.println("Starting tab count: " + tabCount);
+		IQueue<Node<T>> q2 = new Queue<>();
+		q2.offer(root);
+		int leftTabCount = tabCount - 1;
+		int rightTabCount = tabCount + 1;
+		int x = -1;
+		while (!q2.isEmpty()) {
+			Node<T> tmp = q2.poll();
+			for (int i = 0; i < tabCount; i++) {
+				System.out.print("    ");
+			}
+			System.out.print(tmp.data);
+			if (tmp.left != null || tmp.right != null) {
+				System.out.println();
+				x++;
+			}
+			if (tmp.left != null) {
+				leftTabCount = tabCount + x - 1;
+				q2.offer(tmp.left);
+				for (int i = 0; i < leftTabCount; i++) {
+					System.out.print("    ");
+				}
+				System.out.print("/");
+			}
+			if (tmp.right != null) {
+				rightTabCount = tabCount + x + 1;
+				q2.offer(tmp.right);
+				for (int i = 0; i < rightTabCount; i++) {
+					System.out.print("    ");
+				}
+				System.out.print("\\");
+			}
+			if (tmp.left != null || tmp.right != null) {
+				System.out.println();
+			}
+		}
+	}
+	
+	private static class HorizontalDistancePair<N> {
+		int hd;
+		Node<N> node;
+		private HorizontalDistancePair(int hd, Node<N> node) {
+			this.hd = hd;
+			this.node = node;
+		}
+		@Override
+		public String toString() {
+			return "[hd=" + hd + ", node=" + node.data + "]";
+		}
 	}
 
 	@Override
