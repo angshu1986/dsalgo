@@ -18,6 +18,7 @@ public interface IBinaryTree<T> {
 	boolean isPresent(T t);
 	boolean isBst(Comparator<T> compare);
 	int size();
+   int minDepth();
 	int maxDepth();
 	int minValue();
 	int maxValue();
