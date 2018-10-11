@@ -20,15 +20,17 @@ public class BinaryTreeTest {
 		t.addRightNode(15, 25);
 		t.addLeftNode(25, 20);
 		t.addRightNode(50, 60);
-		//t.addRightNode(60, 100);
+		t.addRightNode(60, 100);
 		t.addLeftNode(20, 45);
 		t.addLeftNode(45, 75);
 		t.addLeftNode(75, 80);
+		t.printLevelOrder();
 		System.out.println("Is full: " + t.isFullTree());
 		System.out.println("Is complete: " + t.isComplete());
 		System.out.println("Size: " + t.size());
 		System.out.println("Running count: " + t.runningCount());
 		System.out.println("Minimum depth: " + t.minDepth());
+		System.out.println("Maximum depth: " + t.maxDepth());
 		//t.printAsTree();
 	}
 
