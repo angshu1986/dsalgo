@@ -21,10 +21,10 @@ public interface IBinaryTree<T> {
 	int runningCount();
 	int minDepth();
 	int maxDepth();
-	T minValue();
-	T maxValue();
+	T minValue(Comparator<T> compare);
+	T maxValue(Comparator<T> compare);
 	int diameter();
-	int getLevel(T t);
+	int getLevel(T t, Comparator<T> compare);
 	int distance(T node1, T node2);
 	T lca(T node1, T node2);
 	void printPreOrder();

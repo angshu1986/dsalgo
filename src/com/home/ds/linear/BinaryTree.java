@@ -138,16 +138,30 @@ public class BinaryTree<T> implements IBinaryTree<T> {
 
 	@Override
 	public boolean isBst(Comparator<T> compare) {
-		return checkBst(root, compare);
+		return checkBst(root, null, null, compare);
 	}
 
-	private boolean checkBst(Node<T> node, Comparator<T> compare) {
-		if (node == null) {
-			return true;
-		}
-		// TODO: complete this
-		return checkBst(node.left, compare) && checkBst(node.right, compare);
-	}
+	//recursive solution
+	private boolean checkBst(Node<T> node, Node<T> left, Node<T> right, Comparator<T> compare) {
+		   // Base condition 
+		    if (node == null) {
+		        return true; 
+		    }
+		    // if left node exist then check it has 
+		    // correct data or not i.e. left node's data 
+		    // should be less than root's data 
+		    if (left != null && compare.compare(node.data, left.data) < 0) { 
+		        return false; 
+		    }
+		    // if right node exist then check it has 
+		    // correct data or not i.e. right node's data 
+		    // should be greater than root's data 
+		    if (right != null && compare.compare(node.data, right.data) > 0) { 
+		        return false; 
+		    }
+		    // check recursively for every node. 
+		    return checkBst(node.left, left, node, compare) && checkBst(node.right, node, right, compare); 
+		 	}
 
 	@Override
 	public int size() {
@@ -214,26 +228,107 @@ public class BinaryTree<T> implements IBinaryTree<T> {
 	}
 
 	@Override
-	public T minValue() {
+	public T minValue(Comparator<T> compare) {
 		// TODO Auto-generated method stub
-		return null;
+		return minValue(root, compare, null);
 	}
-
+	
+	private T minValue(Node<T> node, Comparator<T> compare, T min) {
+		if (node == null) {
+			return min;
+		}
+		if (min == null) {
+			min = node.data;
+		}
+		if (compare.compare(node.data, min) < 0) {
+			min = node.data;
+		}
+		T leftMin = minValue(node.left, compare, min);
+		T rightMin = minValue(node.right, compare, min);
+		if (compare.compare(leftMin, rightMin) < 0) {
+			return leftMin;
+		} else {
+			return rightMin;
+		}
+	}
+	
 	@Override
-	public T maxValue() {
+	public T maxValue(Comparator<T> compare) {
 		// TODO Auto-generated method stub
-		return null;
+		return maxValue(root, compare, null);
+	}
+	
+	private T maxValue(Node<T> node, Comparator<T> compare, T max) {
+		if (node == null) {
+			return max;
+		}
+		if (max == null) {
+			max = node.data;
+		}
+		if (compare.compare(node.data, max) > 0) {
+			max = node.data;
+		}
+		T leftMax = maxValue(node.left, compare, max);
+		T rightMax = maxValue(node.right, compare, max);
+		if (compare.compare(leftMax, rightMax) > 0) {
+			return leftMax;
+		} else {
+			return rightMax;
+		}
 	}
 
 	@Override
 	public int diameter() {
 		// TODO Auto-generated method stub
-		return 0;
+		return diameter(root);
+	}
+	
+	private int diameter(Node<T> node) {
+		if (node == null) {
+			return 0;
+		}
+		int leftHeight = maxDepth(root.left);
+		int rightHeight = maxDepth(node.right);
+		
+		int leftDiameter = diameter(node.left);
+		int rightDiameter = diameter(node.right);
+		
+		return Math.max(leftHeight + rightHeight + 1, Math.max(leftDiameter, rightDiameter));
 	}
 
 	@Override
-	public int getLevel(T t) {
+	public int getLevel(T t, Comparator<T> compare) {
 		// TODO Auto-generated method stub
+		return getLevel(root, t, compare);
+	}
+	
+	private int getLevel(Node<T> node, T t, Comparator<T> compare) {
+		if (node == null) {
+			return -1;
+		}
+		if (compare.compare(node.data, t) == 0) {
+			return 1;
+		}
+		IQueue<Node<T>> q = new Queue<>();
+		q.offer(node);
+		int level = 1;
+		int count = 1;
+		while (!q.isEmpty()) {
+			Node<T> tmp = q.poll();
+			if (compare.compare(t, tmp.data) == 0) {
+				return level;
+			}
+			if (tmp.left != null) {
+				q.offer(tmp.left);
+			}
+			if (tmp.right != null) {
+				q.offer(tmp.right);
+			}
+			if (--count == 0) {
+				count = q.size();
+				level++;
+			}
+		}
 		return 0;
 	}
 
