@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+
+window.onload = function () {
+	
+var data = [];
+	
+$.getJSON("http://localhost:8080/getSortTypes", function(data){
+    for (var i = 0, len = data.length; i < len; i++) {
+        addSortTypeCheckbox(data[i]);
+    }
+});
+
+function addSortTypeCheckbox(name) {
+   var container = $('#sortingTypeSelector');
+   var inputs = container.find('input');
+   var id = inputs.length+1;
+   $('<input />', { type: 'checkbox', id: 'cb'+id, value: name }).appendTo(container);
+   $('<label />', { 'for': 'cb'+id, text: name }).appendTo(container);
+}
+
+$("#datapoints").keypress(function (e) {
+    // Allow: backspace, delete, tab, escape, enter and .
+    if ($.inArray(e.keyCode, [44, 8, 9, 27, 13, 110]) !== -1 ||
+         // Allow: Ctrl+A, Command+A
+        (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) || 
+         // Allow: home, end, left, right, down, up
+        (e.keyCode >= 35 && e.keyCode <= 40)) {
+             // let it happen, don't do anything
+             return;
+    }
+    // Ensure that it is a number and stop the keypress
+    if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+        e.preventDefault();
+    }
+});
+
+$("form").submit(function(e){
+e.preventDefault();
+	var numbers = $('#datapoints').val().split(',');
+	var sorters = [];
+	$("input[type='checkbox']:checked").each(function () {
+	    sorters.push($(this).val());
+	});
+    updateData(sorters, numbers);
+});
+
+function Data (name, dataPoints) {
+	this.type = "spline";
+	this.name = name;
+	this.showInLegend = true;
+	this.dataPoints = dataPoints;
+}
+
+function containsObject(obj, list) {
+    var i;
+    for (i = 0; i < list.length; i++) {
+        if (list[i].name === obj) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+function addData(json) {
+	var dataIndex = containsObject(json.sortType, data);
+	var dataPoint = {x: json.count, y: json.sortingTimeMillis};
+	if (dataIndex == -1) {
+		var dataPoints = [];
+		dataPoints.push(dataPoint);
+		data.push(new Data(json.sortType, dataPoints));
+	} else {
+		data[dataIndex].dataPoints.push(dataPoint);
+	}
+	$("#chartContainer").CanvasJSChart().render();
+}
+
+function updateData(sortTypes, numbers) {
+	$.each(numbers, function(i, number) {
+		//generate random numbers and pass to sorter
+		var array = [];
+		var intNumber = parseInt(number);
+		console.log('Generating random number between 1 and ' + number);
+		for(i = 0; i < intNumber; i++) {
+			var val = Math.floor((Math.random() * intNumber) + 1);
+			array[i] = val;
+		}
+		$.each(sortTypes, function(j, type) {
+			var jsonData = {arr:array, sortType:type, returnSortedArray:false};
+			$.ajax({
+			type: "POST",
+			contentType : "application/json;charset=UTF-8",
+			url: "http://localhost:8080/sort",
+			data: JSON.stringify(jsonData),
+			dataType: "json",
+			
+			success: function(output) {addData(output)}
+		});
+	});
+});
+}
+
+var options = {
+	exportEnabled: true,
+	animationEnabled: true,
+	title:{
+		text: "Comparison of sorting algorithms"
+	},
+	subtitles: [{
+		text: "Click Legend to Hide or Unhide Data Series"
+	}],
+	axisX: {
+		title: "Numbers"
+	},
+	axisY: {
+		title: "Time in miliseconds",
+		titleFontColor: "#4F81BC",
+		lineColor: "#4F81BC",
+		labelFontColor: "#4F81BC",
+		tickColor: "#4F81BC",
+		includeZero: false
+	},
+	toolTip: {
+		shared: true
+	},
+	legend: {
+		cursor: "pointer",
+		itemclick: toggleDataSeries
+	},
+	data: data
+};
+$("#chartContainer").CanvasJSChart(options);
+
+function toggleDataSeries(e) {
+	if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+		e.dataSeries.visible = false;
+	} else {
+		e.dataSeries.visible = true;
+	}
+	e.chart.render();
+}
+
+}
+</script>
+</head>
+<body>
+	<script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+	<script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+	<div id="sortSelector">
+		<form>
+			<fieldset id="sortingTypeSelector">
+				<legend>Select sorting types</legend>
+			</fieldset>
+			<br> Enter datapoints separated by comma
+			<textarea cols="60" rows="1" id="datapoints" name="datapoints"></textarea>
+			<br> <input type="submit" value="Submit">
+		</form>
+	</div>
+	<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+</body>
+</html>
