@@ -5,7 +5,7 @@ public enum SortType {
 	BUBBLE("BUBBLE"), 
 	MERGE("MERGE"), 
 	QUICK("QUICK"), 
-	//HEAP("HEAP"), 
+	HEAP("HEAP"), 
 	INSERTION("INSERTION"), 
 	//RADIX("RADIX"), 
 	SELECTION("SELECTION");

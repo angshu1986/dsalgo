@@ -1,6 +1,7 @@
 package com.home.service.dto;
 
 import com.home.ds.sort.BubbleSort;
+import com.home.ds.sort.HeapSort;
 import com.home.ds.sort.InsertionSort;
 import com.home.ds.sort.MergeSort;
 import com.home.ds.sort.QuickSort;
@@ -21,6 +22,8 @@ public class SortSelector {
 			return new InsertionSort();
 		case SELECTION:
 			return new SelectionSort();
+		case HEAP:
+			return new HeapSort();
 		default:
 			throw new IllegalArgumentException("Sorting not implemented for " + sortType + " sort");
 		}
