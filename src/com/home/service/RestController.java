@@ -6,6 +6,8 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +22,8 @@ import com.home.service.dto.SorterResponse;
 @CrossOrigin(origins = {"http://localhost:8080"})
 public class RestController {
 	
+	private static final Logger LOGGER = LoggerFactory.getLogger(RestController.class);
+	
 	@RequestMapping("/sort")
 	@CrossOrigin(origins = "*")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -27,12 +31,12 @@ public class RestController {
 	public SorterResponse sort(@RequestBody SorterRequest request) {
 		SorterResponse response = new SorterResponse();
 		Sort sorter = SortSelector.getSorter(request.getSortType());
-		System.out.println(request.getSortType() + " Sorting started for " + request.getArr().length + " integers");
+		LOGGER.info(request.getSortType() + " Sorting started for " + request.getArr().length + " integers");
 		long start = System.currentTimeMillis();
 		int arr[] = sorter.sort(request.getArr());
 		long end = System.currentTimeMillis();
 		long runtime = end - start;
-		System.out.println("Sorting time for " + request.getSortType() + " sort took " + runtime * 1000 + " nanoseconds or " + runtime + " milliseconds " + " for " + request.getArr().length + " integers");
+		LOGGER.info("Sorting time for " + request.getSortType() + " sort took " + runtime * 1000 + " nanoseconds or " + runtime + " milliseconds " + " for " + request.getArr().length + " integers");
 		response.setReturnSortedArray(request.isReturnSortedArray());
 		if(request.isReturnSortedArray()) {
 			response.setArr(arr);
@@ -47,7 +51,7 @@ public class RestController {
 	@Produces(MediaType.APPLICATION_JSON)
 	@CrossOrigin(origins = "*")
 	public SortType[] getSortTypes() {
-		System.out.println("Sending sort types");
+		LOGGER.info("Sending sort types");
 		return SortType.values();
 	}
 }

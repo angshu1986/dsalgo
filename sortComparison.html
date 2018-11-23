@@ -73,8 +73,21 @@ function addData(json) {
 		data.push(new Data(json.sortType, dataPoints));
 	} else {
 		data[dataIndex].dataPoints.push(dataPoint);
+		sortDatapoints(dataIndex);
 	}
 	$("#chartContainer").CanvasJSChart().render();
+}
+
+function sortDatapoints(index) {
+	for(i = 0; i < data[index].dataPoints.length; i++) {
+		for(j = i + 1; j < data[index].dataPoints.length; j++) {
+			if(data[index].dataPoints[j]['x'] < data[index].dataPoints[i]['x']) {
+				var temp = data[index].dataPoints[j];
+				data[index].dataPoints[j] = data[index].dataPoints[i];
+				data[index].dataPoints[i] = temp;
+			}
+		}
+	}
 }
 
 function updateData(sortTypes, numbers) {
