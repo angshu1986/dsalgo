@@ -15,5 +15,7 @@ public interface IList<E> extends Iterable<E> {
 	int size();
 
 	boolean isEmpty();
+	
+	E getLast(int index);
 
 }

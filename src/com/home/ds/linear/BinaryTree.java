@@ -26,8 +26,7 @@ public class BinaryTree<T> implements IBinaryTree<T> {
 
 	private Node<T> root;
 	private int size;
-	private int level;
-
+	
 	public BinaryTree(T root) {
 		this.root = new Node<T>(root);
 		size++;
@@ -141,27 +140,19 @@ public class BinaryTree<T> implements IBinaryTree<T> {
 		return checkBst(root, null, null, compare);
 	}
 
-	//recursive solution
+	// recursive solution
 	private boolean checkBst(Node<T> node, Node<T> left, Node<T> right, Comparator<T> compare) {
-		   // Base condition 
-		    if (node == null) {
-		        return true; 
-		    }
-		    // if left node exist then check it has 
-		    // correct data or not i.e. left node's data 
-		    // should be less than root's data 
-		    if (left != null && compare.compare(node.data, left.data) < 0) { 
-		        return false; 
-		    }
-		    // if right node exist then check it has 
-		    // correct data or not i.e. right node's data 
-		    // should be greater than root's data 
-		    if (right != null && compare.compare(node.data, right.data) > 0) { 
-		        return false; 
-		    }
-		    // check recursively for every node. 
-		    return checkBst(node.left, left, node, compare) && checkBst(node.right, node, right, compare); 
-		 	}
+		if (node == null) {
+			return true;
+		}
+		if (left != null && compare.compare(node.data, left.data) < 0) {
+			return false;
+		}
+		if (right != null && compare.compare(node.data, right.data) > 0) {
+			return false;
+		}
+		return checkBst(node.left, left, node, compare) && checkBst(node.right, node, right, compare);
+	}
 
 	@Override
 	public int size() {
@@ -229,10 +220,9 @@ public class BinaryTree<T> implements IBinaryTree<T> {
 
 	@Override
 	public T minValue(Comparator<T> compare) {
-		// TODO Auto-generated method stub
 		return minValue(root, compare, null);
 	}
-	
+
 	private T minValue(Node<T> node, Comparator<T> compare, T min) {
 		if (node == null) {
 			return min;
@@ -251,13 +241,12 @@ public class BinaryTree<T> implements IBinaryTree<T> {
 			return rightMin;
 		}
 	}
-	
+
 	@Override
 	public T maxValue(Comparator<T> compare) {
-		// TODO Auto-generated method stub
 		return maxValue(root, compare, null);
 	}
-	
+
 	private T maxValue(Node<T> node, Comparator<T> compare, T max) {
 		if (node == null) {
 			return max;
@@ -279,29 +268,27 @@ public class BinaryTree<T> implements IBinaryTree<T> {
 
 	@Override
 	public int diameter() {
-		// TODO Auto-generated method stub
 		return diameter(root);
 	}
-	
+
 	private int diameter(Node<T> node) {
 		if (node == null) {
 			return 0;
 		}
 		int leftHeight = maxDepth(root.left);
 		int rightHeight = maxDepth(node.right);
-		
+
 		int leftDiameter = diameter(node.left);
 		int rightDiameter = diameter(node.right);
-		
+
 		return Math.max(leftHeight + rightHeight + 1, Math.max(leftDiameter, rightDiameter));
 	}
 
 	@Override
 	public int getLevel(T t, Comparator<T> compare) {
-		// TODO Auto-generated method stub
 		return getLevel(root, t, compare);
 	}
-	
+
 	private int getLevel(Node<T> node, T t, Comparator<T> compare) {
 		if (node == null) {
 			return -1;
@@ -333,15 +320,35 @@ public class BinaryTree<T> implements IBinaryTree<T> {
 	}
 
 	@Override
-	public int distance(T node1, T node2) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int distance(T node1, T node2, Comparator<T> compare) {
+		/**
+		 * distance of node1 from root + distance of node2 from root - 2 * distance of lca from root
+		 */
+		int node1Distance = getLevel(node1, compare);
+		int node2Distance = getLevel(node2, compare);
+		T lca = lca(node1, node2, compare);
+		int lcaDistance = getLevel(lca, compare);
+		return node1Distance + node2Distance - (2 * lcaDistance);
 	}
-
+	
 	@Override
-	public T lca(T node1, T node2) {
-		// TODO Auto-generated method stub
-		return null;
+	public T lca(T node1, T node2, Comparator<T> compare) {
+		return lca(root, node1, node2, compare);
+	}
+	
+	private T lca(Node<T> node, T node1, T node2, Comparator<T> compare) {
+		if (node == null) {
+			return null;
+		}
+		if (compare.compare(node.data, node1) == 0 || compare.compare(node.data, node2) == 0) {
+			return node.data;
+		}
+		T left = lca(node.left, node1, node2, compare);
+		T right = lca(node.right, node1, node2, compare);
+		if (left != null && right != null) {
+			return node.data;
+		}
+		return (left != null) ? left : right;
 	}
 
 	@Override
@@ -433,9 +440,7 @@ public class BinaryTree<T> implements IBinaryTree<T> {
 				l.add(left);
 			}
 		}
-		System.out.println(l);
 		int tabCount = Math.abs(l.stream().mapToInt(m -> m.hd).min().getAsInt());
-		System.out.println("Starting tab count: " + tabCount);
 		IQueue<Node<T>> q2 = new Queue<>();
 		q2.offer(root);
 		int leftTabCount = tabCount - 1;

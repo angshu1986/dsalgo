@@ -56,4 +56,9 @@ public class LinkedList2<E> implements IList<E> {
 	public Iterator<E> iterator() {
 		return l.iterator();
 	}
+
+	@Override
+	public E getLast(int index) {
+		return get(l.size() - index);
+	}
 }

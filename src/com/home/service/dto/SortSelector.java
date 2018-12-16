@@ -7,6 +7,7 @@ import com.home.ds.sort.MergeSort;
 import com.home.ds.sort.QuickSort;
 import com.home.ds.sort.SelectionSort;
 import com.home.ds.sort.Sort;
+import com.home.ds.sort.TimSort;
 
 public class SortSelector {
 
@@ -24,6 +25,8 @@ public class SortSelector {
 			return new SelectionSort();
 		case HEAP:
 			return new HeapSort();
+		case TIM:
+			return new TimSort();
 		default:
 			throw new IllegalArgumentException("Sorting not implemented for " + sortType + " sort");
 		}

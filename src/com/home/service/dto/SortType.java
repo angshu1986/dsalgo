@@ -8,8 +8,8 @@ public enum SortType {
 	HEAP("HEAP"), 
 	INSERTION("INSERTION"), 
 	//RADIX("RADIX"), 
-	SELECTION("SELECTION");
-	//TIM("TIM");
+	SELECTION("SELECTION"),
+	TIM("TIM");
 	private String sortType;
 
 	private SortType(String sortType) {

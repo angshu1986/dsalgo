@@ -25,8 +25,8 @@ public interface IBinaryTree<T> {
 	T maxValue(Comparator<T> compare);
 	int diameter();
 	int getLevel(T t, Comparator<T> compare);
-	int distance(T node1, T node2);
-	T lca(T node1, T node2);
+	int distance(T node1, T node2, Comparator<T> compare);
+	T lca(T node1, T node2, Comparator<T> compare);
 	void printPreOrder();
 	void printInOrder();
 	void printPostOrder();

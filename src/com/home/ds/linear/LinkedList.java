@@ -167,4 +167,18 @@ public class LinkedList<E> implements IList<E> {
 		}
 
 	}
+
+	@Override
+	public E getLast(int index) {
+		Node<E> tmp = head;
+		Node<E> tmp2 = head;
+		for (int i = 0; i < index; i++) {
+			tmp2 = tmp2.next;
+		}
+		while (tmp2 != null) {
+			tmp2 = tmp2.next;
+			tmp = tmp.next;
+		}
+		return tmp.ele;
+	}
 }

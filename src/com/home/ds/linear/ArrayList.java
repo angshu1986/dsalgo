@@ -121,10 +121,17 @@ public class ArrayList<E> implements IList<E> {
 			return c == count - 1;
 		}
 
+		@SuppressWarnings("unchecked")
 		@Override
 		public E next() {
 			return (E) arr[c++];
 		}
 
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public E getLast(int index) {
+		return (E) arr[count - index];
 	}
 }

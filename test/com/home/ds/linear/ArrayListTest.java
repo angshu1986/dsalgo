@@ -65,6 +65,7 @@ public class ArrayListTest {
 		assertEquals("Check non zero size list", 9, l.size());
 		assertEquals("Check added element", 12, l.get(4).intValue());
 		System.out.println(l.toString());
+		assertEquals("Check third from last element", 452, l.getLast(3).intValue());
 	}
 
 }

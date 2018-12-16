@@ -44,11 +44,11 @@ e.preventDefault();
 	$("input[type='checkbox']:checked").each(function () {
 	    sorters.push($(this).val());
 	});
-    updateData(sorters, numbers);
+	updateData(sorters, numbers);
 });
 
 function Data (name, dataPoints) {
-	this.type = "spline";
+	this.type = "spline"; //spline
 	this.name = name;
 	this.showInLegend = true;
 	this.dataPoints = dataPoints;
