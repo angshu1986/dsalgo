@@ -57,6 +57,21 @@ public class BinaryTreeTest {
 		assertEquals("LCA", 50, t.lca(45, 100, compare).intValue());
 		assertEquals("Distance between two nodes", 6, t.distance(25, 100, compare));
 		//t.printAsTree();
+		
+		IntegerBinaryTree intTree = new IntegerBinaryTree(35);
+		intTree.addLeftNode(35, 30);
+		intTree.addRightNode(35, 50);
+		intTree.addLeftNode(30, 15);
+		intTree.addLeftNode(15, 10);
+		intTree.addRightNode(15, 25);
+		intTree.addLeftNode(25, 20);
+		intTree.addRightNode(50, 60);
+		intTree.addRightNode(60, 100);
+		intTree.addLeftNode(50, 45);
+		intTree.addLeftNode(100, 75);
+		intTree.addRightNode(75, 80);
+		intTree.printLevelOrder();
+		System.out.println(intTree.getMaxSum());
 	}
 
 }

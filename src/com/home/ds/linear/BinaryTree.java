@@ -9,7 +9,7 @@ import com.home.ds.adt.IQueue;
 
 public class BinaryTree<T> implements IBinaryTree<T> {
 
-	private static class Node<E> {
+	protected static class Node<E> {
 		E data;
 		Node<E> left;
 		Node<E> right;
@@ -24,7 +24,7 @@ public class BinaryTree<T> implements IBinaryTree<T> {
 		}
 	}
 
-	private Node<T> root;
+	protected Node<T> root;
 	private int size;
 	
 	public BinaryTree(T root) {
