@@ -1,4 +1,4 @@
-package com.home.ds.linear;
+package com.home.ds.tree;
 
 import java.util.Comparator;
 
@@ -49,11 +49,9 @@ public class IntegerBinaryTree extends BinaryTree<Integer> {
 		}
 		int left = getMaxSum(node.left, max);
 		int right = getMaxSum(node.right, max);
-		System.out.println("Node value: " + node.data + " Left sum: " + left + " Right sum: " + right + " Result now: " + max[0]);
 		int current = Math.max(node.data, Math.max(node.data + left, node.data + right));
 	 
 		max[0] = Math.max(max[0], Math.max(current, left + node.data + right));
-		System.out.println("Node value: " + node.data + " Current after: " + current + " Max after: " + max[0]);
 		return current;
 	}	
 }

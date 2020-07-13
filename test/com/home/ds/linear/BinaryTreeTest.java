@@ -9,6 +9,8 @@ import java.util.Comparator;
 import org.junit.Test;
 
 import com.home.ds.adt.IBinaryTree;
+import com.home.ds.tree.BinaryTree;
+import com.home.ds.tree.IntegerBinaryTree;
 /**
  * 				35
  * 			   /  \
@@ -71,6 +73,7 @@ public class BinaryTreeTest {
 		intTree.addLeftNode(100, 75);
 		intTree.addRightNode(75, 80);
 		intTree.printLevelOrder();
+		intTree.printTopView();
 		System.out.println(intTree.getMaxSum());
 	}
 

@@ -1,11 +1,14 @@
-package com.home.ds.linear;
+package com.home.ds.tree;
 
 import java.util.Comparator;
-import java.util.List;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.TreeMap;
 
 import com.home.ds.adt.IBinaryTree;
 import com.home.ds.adt.IList;
 import com.home.ds.adt.IQueue;
+import com.home.ds.linear.Queue;
 
 public class BinaryTree<T> implements IBinaryTree<T> {
 
@@ -153,6 +156,16 @@ public class BinaryTree<T> implements IBinaryTree<T> {
 		}
 		return checkBst(node.left, left, node, compare) && checkBst(node.right, node, right, compare);
 	}
+	
+	/*boolean checkBST(Node<T> root, int min, int max) {
+        if (root == null) {
+            return true;
+        }
+        if (root.data < min || root.data > max) {
+            return false;
+        }
+        return checkBST(root.left, min, root.data - 1) && checkBST(root.right, root.data + 1, max);
+    }*/
 
 	@Override
 	public int size() {
@@ -422,75 +435,7 @@ public class BinaryTree<T> implements IBinaryTree<T> {
 
 	@Override
 	public void printAsTree() {
-		IQueue<HorizontalDistancePair<T>> q = new Queue<>();
-		List<HorizontalDistancePair<T>> l = new java.util.ArrayList<>();
-		HorizontalDistancePair<T> p = new HorizontalDistancePair<>(0, root);
-		l.add(p);
-		q.offer(p);
-		while (!q.isEmpty()) {
-			HorizontalDistancePair<T> tmp = q.poll();
-			if (tmp.node.left != null) {
-				HorizontalDistancePair<T> left = new HorizontalDistancePair<>(tmp.hd - 1, tmp.node.left);
-				q.offer(left);
-				l.add(left);
-			}
-			if (tmp.node.right != null) {
-				HorizontalDistancePair<T> left = new HorizontalDistancePair<>(tmp.hd + 1, tmp.node.right);
-				q.offer(left);
-				l.add(left);
-			}
-		}
-		int tabCount = Math.abs(l.stream().mapToInt(m -> m.hd).min().getAsInt());
-		IQueue<Node<T>> q2 = new Queue<>();
-		q2.offer(root);
-		int leftTabCount = tabCount - 1;
-		int rightTabCount = tabCount + 1;
-		int x = -1;
-		while (!q2.isEmpty()) {
-			Node<T> tmp = q2.poll();
-			for (int i = 0; i < tabCount; i++) {
-				System.out.print("    ");
-			}
-			System.out.print(tmp.data);
-			if (tmp.left != null || tmp.right != null) {
-				System.out.println();
-				x++;
-			}
-			if (tmp.left != null) {
-				leftTabCount = tabCount + x - 1;
-				q2.offer(tmp.left);
-				for (int i = 0; i < leftTabCount; i++) {
-					System.out.print("    ");
-				}
-				System.out.print("/");
-			}
-			if (tmp.right != null) {
-				rightTabCount = tabCount + x + 1;
-				q2.offer(tmp.right);
-				for (int i = 0; i < rightTabCount; i++) {
-					System.out.print("    ");
-				}
-				System.out.print("\\");
-			}
-			if (tmp.left != null || tmp.right != null) {
-				System.out.println();
-			}
-		}
-	}
-
-	private static class HorizontalDistancePair<N> {
-		int hd;
-		Node<N> node;
-
-		private HorizontalDistancePair(int hd, Node<N> node) {
-			this.hd = hd;
-			this.node = node;
-		}
-
-		@Override
-		public String toString() {
-			return "[hd=" + hd + ", node=" + node.data + "]";
-		}
+		
 	}
 
 	@Override
@@ -507,8 +452,22 @@ public class BinaryTree<T> implements IBinaryTree<T> {
 
 	@Override
 	public void printTopView() {
-		// TODO Auto-generated method stub
-
+		System.out.println("Printing top view");
+		Map<Integer, T> map = new TreeMap<>();
+		printTopView(root, 0, map);
+		Iterator<T> itr = map.values().iterator();
+		StringBuilder sb = new StringBuilder();
+		while (itr.hasNext()) {
+			sb.append(itr.next() + " ");
+		}
+		System.out.println(sb.toString().trim());
+	}
+	
+	private void printTopView(Node<T> node, int index, Map<Integer, T> map) {
+		if (node == null) return;
+		map.putIfAbsent(index, node.data);
+		printTopView(node.left, index - 1, map);
+		printTopView(node.right, index + 1, map);
 	}
 
 	@Override
