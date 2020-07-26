@@ -3,10 +3,9 @@ package com.home.ds.sort;
 public class TimSort implements Sort {
 
 	@Override
-	public int[] sort(int[] arr) {
+	public void sort(int[] arr) {
 		// TODO Auto-generated method stub
 		timSort(arr, arr.length/4);
-		return arr;
 	}
 
 	private static final int RUN = 32;

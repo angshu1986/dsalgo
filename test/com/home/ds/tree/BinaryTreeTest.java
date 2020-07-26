@@ -1,4 +1,4 @@
-package com.home.ds.linear;
+package com.home.ds.tree;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;

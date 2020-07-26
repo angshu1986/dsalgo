@@ -1,12 +1,11 @@
 package com.home.ds.sort;
 
-import java.util.Queue;
-import java.util.stream.IntStream;
-
 public class QuickSort implements Sort {
 	
 	public static void main(String[] args) {
-		printArray(new QuickSort().sort(new int[]{1, 3, -6, 2, 5, -3, 7}));;
+		int arr[] = new int[]{1, 3, -6, 2, 5, -3, 7};
+		new QuickSort().sort(arr);
+		printArray(arr);
 	}
 	
 	static void printArray(int arr[]) 
@@ -18,9 +17,8 @@ public class QuickSort implements Sort {
     }
 
 	@Override
-	public int[] sort(int[] arr) {
+	public void sort(int[] arr) {
 		quickSort(arr, 0, arr.length - 1);
-		return arr;
 	}
 
 	private int partition(int a[], int st, int end) {

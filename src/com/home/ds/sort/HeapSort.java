@@ -1,9 +1,16 @@
 package com.home.ds.sort;
 
+import java.util.Arrays;
+
 public class HeapSort implements Sort {
+	public static void main(String[] args) {
+		int arr[] = new int[] {5,20,7,10,15};
+		new HeapSort().sort(arr);
+		System.out.println(Arrays.toString(arr));
+	}
 
 	@Override
-	public int[] sort(int[] arr) {
+	public void sort(int[] arr) {
 		int n = arr.length;
 
 		// Build heap (rearrange array)
@@ -20,7 +27,6 @@ public class HeapSort implements Sort {
 			// call max heapify on the reduced heap
 			heapify(arr, i, 0);
 		}
-		return arr;
 	}
 
 	private void heapify(int arr[], int n, int i) {

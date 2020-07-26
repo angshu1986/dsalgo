@@ -3,7 +3,7 @@ package com.home.ds.sort;
 public class InsertionSort implements Sort {
 
 	@Override
-	public int[] sort(int[] arr) {
+	public void sort(int[] arr) {
 		int n = arr.length;
 		for (int i = 1; i < n; ++i) {
 			int key = arr[i];
@@ -19,7 +19,6 @@ public class InsertionSort implements Sort {
 			}
 			arr[j + 1] = key;
 		}
-		return arr;
 	}
 
 }

@@ -35,6 +35,15 @@ public class ArrayList<E> implements IList<E> {
 		count++;
 	}
 
+	@Override
+	@SuppressWarnings("unchecked")
+	public E set(E e, int index) {
+		checkRange(index);
+		E oldValue = (E) arr[index];
+		arr[index] = e;
+		return oldValue;
+	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public E get(int index) {

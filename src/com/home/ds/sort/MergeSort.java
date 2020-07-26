@@ -3,14 +3,14 @@ package com.home.ds.sort;
 public class MergeSort implements Sort {
 	
 	@Override
-	public int[] sort(int[] arr) {
+	public void sort(int[] arr) {
 		if (arr == null) {
-			return arr;
+			return;
 		}
 		if (arr.length == 1) {
-			return arr;
+			return;
 		}
-		return sort(arr, 0, arr.length - 1);
+		sort(arr, 0, arr.length - 1);
 	}
 
 	private int[] sort(int[] arr, int st, int end) {

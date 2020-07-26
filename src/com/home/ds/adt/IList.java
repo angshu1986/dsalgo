@@ -18,4 +18,6 @@ public interface IList<E> extends Iterable<E> {
 	
 	E getLast(int index);
 
+	E set(E element, int index);
+
 }

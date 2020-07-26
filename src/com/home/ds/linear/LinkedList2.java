@@ -61,4 +61,10 @@ public class LinkedList2<E> implements IList<E> {
 	public E getLast(int index) {
 		return get(l.size() - index);
 	}
+
+	@Override
+	public E set(E element, int index) {
+		// TODO to be implemented in later check in
+		return null;
+	}
 }

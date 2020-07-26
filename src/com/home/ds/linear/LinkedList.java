@@ -181,4 +181,10 @@ public class LinkedList<E> implements IList<E> {
 		}
 		return tmp.ele;
 	}
+
+	@Override
+	public E set(E element, int index) {
+		// TODO to be implemented
+		return null;
+	}
 }

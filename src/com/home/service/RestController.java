@@ -31,7 +31,8 @@ public class RestController {
 		Sort sorter = SortSelector.getSorter(request.getSortType());
 		LOGGER.info(request.getSortType() + " Sorting started for " + request.getArr().length + " integers");
 		long start = System.currentTimeMillis();
-		int arr[] = sorter.sort(request.getArr());
+		int []arr = request.getArr();
+		sorter.sort(arr);
 		long end = System.currentTimeMillis();
 		long runtime = end - start;
 		LOGGER.info("Sorting time for " + request.getSortType() + " sort took " + runtime * 1000 + " nanoseconds or " + runtime + " milliseconds " + " for " + request.getArr().length + " integers");
