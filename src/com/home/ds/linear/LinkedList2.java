@@ -2,9 +2,9 @@ package com.home.ds.linear;
 
 import java.util.Iterator;
 
-import com.home.ds.adt.IList;
+import com.home.ds.adt.List;
 
-public class LinkedList2<E> implements IList<E> {
+public class LinkedList2<E> implements List<E> {
 
 	private DoublyLinkedList<E> l;
 
@@ -64,6 +64,12 @@ public class LinkedList2<E> implements IList<E> {
 
 	@Override
 	public E set(E element, int index) {
+		// TODO to be implemented in later check in
+		return null;
+	}
+
+	@Override
+	public E[] toArray() {
 		// TODO to be implemented in later check in
 		return null;
 	}

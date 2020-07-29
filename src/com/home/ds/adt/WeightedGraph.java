@@ -1,4 +1,4 @@
-package com.home.ds.graph;
+package com.home.ds.adt;
 
 public interface WeightedGraph<V, E> {
 

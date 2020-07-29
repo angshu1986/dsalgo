@@ -3,13 +3,15 @@ package com.home.ds.linear;
 import java.util.Arrays;
 import java.util.Iterator;
 
-import com.home.ds.adt.IList;
+import com.home.ds.adt.List;
 
-public class ArrayList<E> implements IList<E> {
+public class ArrayList<E> implements List<E> {
 
 	private int capacity;
 	private Object[] arr;
 	private int count;
+
+	private static final Object[] EMPTY_ARRAY = {};
 
 	public ArrayList(int capacity) {
 		this.capacity = capacity;
@@ -18,6 +20,16 @@ public class ArrayList<E> implements IList<E> {
 
 	public ArrayList() {
 		this(10);
+	}
+
+	public ArrayList(List<E> in) {
+		arr = in.toArray();
+		if ((count = arr.length) != 0) {
+			if (arr.getClass() != Object[].class)
+				arr = Arrays.copyOf(arr, count, Object[].class);
+		} else {
+			this.arr = EMPTY_ARRAY;
+		}
 	}
 
 	@Override
@@ -120,7 +132,7 @@ public class ArrayList<E> implements IList<E> {
 	public Iterator<E> iterator() {
 		return new Itr();
 	}
-	
+
 	private class Itr implements Iterator<E> {
 
 		int c = 0;
@@ -142,5 +154,11 @@ public class ArrayList<E> implements IList<E> {
 	@Override
 	public E getLast(int index) {
 		return (E) arr[count - index];
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public E[] toArray() {
+		return (E[]) Arrays.copyOf(arr, count);
 	}
 }

@@ -36,6 +36,6 @@ public interface IBinaryTree<T> {
 	void printAllPaths();
 	void printTopView();
 	void printZigZag();
-	IList<T> flatten();
+	List<T> flatten();
 	
 }

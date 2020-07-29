@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import com.home.ds.adt.IBinaryTree;
-import com.home.ds.adt.IList;
+import com.home.ds.adt.List;
 import com.home.ds.adt.IQueue;
 import com.home.ds.linear.Queue;
 
@@ -477,7 +477,7 @@ public class BinaryTree<T> implements IBinaryTree<T> {
 	}
 
 	@Override
-	public IList<T> flatten() {
+	public List<T> flatten() {
 		// TODO Auto-generated method stub
 		return null;
 	}

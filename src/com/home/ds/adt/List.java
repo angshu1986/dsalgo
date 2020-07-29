@@ -1,6 +1,6 @@
 package com.home.ds.adt;
 
-public interface IList<E> extends Iterable<E> {
+public interface List<E> extends Iterable<E> {
 
 	void add(E ele);
 
@@ -15,9 +15,11 @@ public interface IList<E> extends Iterable<E> {
 	int size();
 
 	boolean isEmpty();
-	
+
 	E getLast(int index);
 
 	E set(E element, int index);
+
+	E[] toArray();
 
 }

@@ -3,14 +3,16 @@ package com.home.ds.graph;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.home.ds.adt.IList;
+import com.home.ds.adt.List;
+import com.home.ds.adt.UnweightedGraph;
+import com.home.ds.adt.WeightedGraph;
 import com.home.ds.linear.ArrayList;
 
 public abstract class AbstractGraph<V, E> implements UnweightedGraph<V>, WeightedGraph<V, E> {
 
 	private boolean isBidirectional;
 
-	private Map<V, IList<V>> vertices;
+	private Map<V, List<V>> vertices;
 
 	private static class Edge<V, E> {
 		private V v1;
@@ -24,7 +26,7 @@ public abstract class AbstractGraph<V, E> implements UnweightedGraph<V>, Weighte
 		}
 	}
 
-	private IList<Edge<V, E>> edges;
+	private List<Edge<V, E>> edges;
 
 	protected AbstractGraph(boolean isBidirectional) {
 		this.isBidirectional = isBidirectional;

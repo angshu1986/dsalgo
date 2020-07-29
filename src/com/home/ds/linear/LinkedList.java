@@ -2,9 +2,9 @@ package com.home.ds.linear;
 
 import java.util.Iterator;
 
-import com.home.ds.adt.IList;
+import com.home.ds.adt.List;
 
-public class LinkedList<E> implements IList<E> {
+public class LinkedList<E> implements List<E> {
 
 	private static class Node<E> {
 		private E ele;
@@ -186,5 +186,18 @@ public class LinkedList<E> implements IList<E> {
 	public E set(E element, int index) {
 		// TODO to be implemented
 		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public E[] toArray() {
+		Object arr[] = new Object[count];
+		Node<E> tmp = head;
+		int i = 0;
+		while (tmp != null && i < count) {
+			arr[i++] = (tmp.ele);
+			tmp = tmp.next;
+		}
+		return (E[]) arr;
 	}
 }

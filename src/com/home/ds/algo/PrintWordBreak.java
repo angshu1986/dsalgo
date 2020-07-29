@@ -3,7 +3,7 @@ package com.home.ds.algo;
 import java.util.HashSet;
 import java.util.Set;
 
-public class WordBreak {
+public class PrintWordBreak {
 
 	private static final Set<String> dict = new HashSet<String>() {
 		/**
@@ -29,7 +29,7 @@ public class WordBreak {
 	};
 
 	public static void main(String[] args) {
-		new WordBreak().wordBreakBacktracking("ilikeicecreamandmango", 0, "");
+		new PrintWordBreak().wordBreakBacktracking("ilikeicecreamandmango", 0, "");
 	}
 
 	private void wordBreakBacktracking(String sentence, int index, String wordWithSpace) {

@@ -6,7 +6,7 @@ import com.home.ds.linear.ArrayList;
 
 public abstract class AbstractHeap<V> implements Heap<V> {
 
-	protected IList<V> heap;
+	protected List<V> heap;
 	protected Comparator<V> comparator;
 	private static final int DEFAULT_SIZE = 10;
 
@@ -117,14 +117,9 @@ public abstract class AbstractHeap<V> implements Heap<V> {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public V[] toArray() {
-		Object arr[] = new Object[heap.size()];
-		for (int i = 0; i < heap.size(); i++) {
-			arr[i] = heap.get(i);
-		}
-		return (V[]) arr;
+		return heap.toArray();
 	}
 
 	@Override
