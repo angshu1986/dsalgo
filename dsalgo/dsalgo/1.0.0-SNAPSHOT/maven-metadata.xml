@@ -5,20 +5,26 @@
   <version>1.0.0-SNAPSHOT</version>
   <versioning>
     <snapshot>
-      <timestamp>20200727.180610</timestamp>
+      <timestamp>20200811.172805</timestamp>
       <buildNumber>1</buildNumber>
     </snapshot>
-    <lastUpdated>20200727180610</lastUpdated>
+    <lastUpdated>20200811172805</lastUpdated>
     <snapshotVersions>
       <snapshotVersion>
         <extension>jar</extension>
-        <value>1.0.0-20200727.180610-1</value>
-        <updated>20200727180610</updated>
+        <value>1.0.0-20200811.172805-1</value>
+        <updated>20200811172805</updated>
       </snapshotVersion>
       <snapshotVersion>
         <extension>pom</extension>
-        <value>1.0.0-20200727.180610-1</value>
-        <updated>20200727180610</updated>
+        <value>1.0.0-20200811.172805-1</value>
+        <updated>20200811172805</updated>
+      </snapshotVersion>
+      <snapshotVersion>
+        <classifier>spring-boot</classifier>
+        <extension>jar</extension>
+        <value>1.0.0-20200811.172805-1</value>
+        <updated>20200811172805</updated>
       </snapshotVersion>
     </snapshotVersions>
   </versioning>
