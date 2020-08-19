@@ -8,7 +8,7 @@ import java.util.stream.Stream;
  * @author angsh
  *
  */
-public class ZeroOneKnapsackMaxValue {
+public class UnboundedKnapsackMaxValue {
 	public static void main(String[] args) {
 		Scanner s = new Scanner(System.in);
 		int N = Integer.parseInt(s.nextLine().trim());
@@ -20,27 +20,27 @@ public class ZeroOneKnapsackMaxValue {
 				.mapToInt(m -> Integer.parseInt(m)).toArray();
 		int n = wt.length;
 		long dpSt = System.currentTimeMillis();
-		int dpRes = zeroOneKnapsackDp(wt, cost, n, N);
+		int dpRes = unboundedKnapsackDp(wt, cost, n, N);
 		long dpEnd = System.currentTimeMillis();
 		long dpTime = (dpEnd - dpSt);
 		System.out.println(
-				"0/1 knapsack max value dp for weight = " + N + " is " + dpRes + " time taken " + dpTime + " ms");
+				"Unbounded knapsack max value dp for weight = " + N + " is " + dpRes + " time taken " + dpTime + " ms");
 		long dpSpaceOptSt = System.currentTimeMillis();
-		int dpSpaceOptRes = zeroOneKnapsackDpSpaceOptimized(wt, cost, n, N);
+		int dpSpaceOptRes = unboundedKnapsackDpSpaceOptimized(wt, cost, n, N);
 		long dpSpaceOptEnd = System.currentTimeMillis();
 		long dpSpaceOptTime = (dpSpaceOptEnd - dpSpaceOptSt);
-		System.out.println("0/1 knapsack max value dp space optimized for weight = " + N + " is " + dpSpaceOptRes
+		System.out.println("Unbounded knapsack max value dp space optimized for weight = " + N + " is " + dpSpaceOptRes
 				+ " time taken " + dpSpaceOptTime + " ms");
 		long recSt = System.currentTimeMillis();
-		int recRes = zereOneKnapsackRecursive(wt, cost, n, N);
+		int recRes = unboundedKnapsackRecursive(wt, cost, n, N);
 		long recEnd = System.currentTimeMillis();
 		long recTime = (recEnd - recSt);
-		System.out.println("0/1 knapsack max value recursive for weight = " + N + " is " + recRes + " time taken "
+		System.out.println("Unbounded knapsack max value recursive for weight = " + N + " is " + recRes + " time taken "
 				+ recTime + " ms");
 		s.close();
 	}
 
-	private static int zeroOneKnapsackDp(int[] wt, int[] cost, int n, int N) {
+	private static int unboundedKnapsackDp(int[] wt, int[] cost, int n, int N) {
 		if (n == 0 || N == 0)
 			return 0;
 		int dp[][] = new int[n + 1][N + 1];
@@ -49,7 +49,7 @@ public class ZeroOneKnapsackMaxValue {
 				if (wt[i - 1] > j) {
 					dp[i][j] = dp[i - 1][j];
 				} else {
-					int include = cost[i - 1] + dp[i - 1][j - wt[i - 1]];
+					int include = cost[i - 1] + dp[i][j - wt[i - 1]];
 					int exclude = dp[i - 1][j];
 					dp[i][j] = Math.max(include, exclude);
 				}
@@ -58,27 +58,43 @@ public class ZeroOneKnapsackMaxValue {
 		return dp[n][N];
 	}
 
-	private static int zeroOneKnapsackDpSpaceOptimized(int[] wt, int[] cost, int n, int N) {
+	private static int unboundedKnapsackDpSpaceOptimized(int[] wt, int[] cost, int n, int N) {
 		if (n == 0 || N == 0)
 			return 0;
 		int dp[] = new int[N + 1];
-		for (int i = 0; i < n; i++) {
-			for (int j = N; j >= wt[i]; j--) {
+		/**
+		 * the commented code also does the same, but it checks for each wt from 0 to N
+		 * using all cost and wt, while the second method checks for each cost to build
+		 * up all wt from 0 to N
+		 */
+
+		/*for (int i = 0; i < n; i++) {
+			for (int j = wt[i]; j <= N; j++) {
 				dp[j] = Math.max(dp[j], cost[i] + dp[j - wt[i]]);
+			}
+		}*/
+
+		for (int i = 1; i <= N; i++) {
+			for (int j = 0; j < n; j++) {
+				if (wt[j] <= i) {
+					dp[i] = Math.max(dp[i], cost[j] + dp[i - wt[j]]);
+				} else {
+					break;
+				}
 			}
 		}
 		return dp[N];
 	}
 
-	private static int zereOneKnapsackRecursive(int[] wt, int[] cost, int n, int N) {
+	private static int unboundedKnapsackRecursive(int[] wt, int[] cost, int n, int N) {
 		if (n == 0 || N == 0)
 			return 0;
-		if (wt[n - 1] > N) {
-			return zereOneKnapsackRecursive(wt, cost, n - 1, N);
-		} else {
-			int include = cost[n - 1] + zereOneKnapsackRecursive(wt, cost, n - 1, N - wt[n - 1]);
-			int exclude = zereOneKnapsackRecursive(wt, cost, n - 1, N);
-			return Math.max(include, exclude);
+		int max = Integer.MIN_VALUE;
+		for (int i = 0; i < n; i++) {
+			if (wt[i] <= N) {
+				max = Math.max(max, cost[i] + unboundedKnapsackRecursive(wt, cost, n, N - wt[i]));
+			}
 		}
+		return max;
 	}
 }
