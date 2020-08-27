@@ -14,7 +14,7 @@ public class DirectedWeightedGraphTest {
 
 	@Before
 	public void setUp() throws Exception {
-		graph = new AdjListWeightedGraph<>(false);
+		graph = new AdjListWeightedGraph<>(true);
 		graph.addVertex(10);
 		graph.addEdge(10, 20, 5);
 		graph.addEdge(10, 30, 3);
@@ -32,6 +32,7 @@ public class DirectedWeightedGraphTest {
 		System.out.println(graph.dfs());
 		System.out.println(graph.getAllPath(10, 60));
 		graph.printEdgesPrettyFormat(System.out);
+		System.out.println(graph.hasCycle());
 	}
 
 }

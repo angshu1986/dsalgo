@@ -13,7 +13,7 @@ public class DirectedUnweightedGraphTest {
 
 	@Before
 	public void setUp() throws Exception {
-		graph = new AdjListUnweightedGraph<>(false);
+		graph = new AdjListUnweightedGraph<>(true);
 		graph.addVertex(10);
 		graph.addEdge(10, 20);
 		graph.addEdge(10, 30);
@@ -30,6 +30,7 @@ public class DirectedUnweightedGraphTest {
 		System.out.println(graph.bfs());
 		System.out.println(graph.dfs());
 		System.out.println(graph.getAllPath(10, 60));
+		System.out.println(graph.hasCycle());
 	}
 
 }

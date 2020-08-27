@@ -3,10 +3,12 @@ package com.home.ds.graph;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import com.home.ds.adt.IQueue;
@@ -55,6 +57,11 @@ public class AdjListWeightedGraph<V extends Comparable<V>, E extends Number> imp
 				return true;
 			return false;
 		}
+
+		@Override
+		public String toString() {
+			return "Edge [v1=" + v1 + ", v2=" + v2 + ", wt=" + wt + "]";
+		}
 	}
 
 	private Set<V> vertices;
@@ -92,7 +99,11 @@ public class AdjListWeightedGraph<V extends Comparable<V>, E extends Number> imp
 		}
 		edges.add(newEdge);
 		if (isBidirectional) {
-			edges.add(new Edge<>(v2, v1, wt));
+			Edge<V, E> reverseEdge = new Edge<>(v2, v1, wt);
+			if (edges.contains(reverseEdge) && !replace) {
+				return;
+			}
+			edges.add(reverseEdge);
 		}
 	}
 
@@ -141,7 +152,7 @@ public class AdjListWeightedGraph<V extends Comparable<V>, E extends Number> imp
 			list.add(polled);
 			for (Iterator<Edge<V, E>> itr = edges.iterator(); itr.hasNext();) {
 				Edge<V, E> next = itr.next();
-				if (next.v1.compareTo(polled) == 0) {
+				if (next.v1.equals(polled)) {
 					if (!visited.contains(next.v2)) {
 						q.offer(next.v2);
 						visited.add(next.v2);
@@ -167,7 +178,7 @@ public class AdjListWeightedGraph<V extends Comparable<V>, E extends Number> imp
 			visited.add(popped);
 			for (Iterator<Edge<V, E>> itr = edges.iterator(); itr.hasNext();) {
 				Edge<V, E> next = itr.next();
-				if (next.v1.compareTo(popped) == 0) {
+				if (next.v1.equals(popped)) {
 					if (!visited.contains(next.v2)) {
 						stack.push(next.v2);
 					}
@@ -190,7 +201,7 @@ public class AdjListWeightedGraph<V extends Comparable<V>, E extends Number> imp
 
 	@Override
 	public E getShortestPath(V start, V end) {
-		// TODO Auto-generated method stub
+		// TODO use Bellman Ford
 		return null;
 	}
 
@@ -220,12 +231,108 @@ public class AdjListWeightedGraph<V extends Comparable<V>, E extends Number> imp
 				sb.append("\n");
 		}
 		out.write(sb.toString().getBytes());
+		out.write("\n".getBytes());
 	}
 
 	@Override
 	public boolean hasCycle() {
 		if (isBidirectional)
-			return true;
+			return hasCycleUnionFind();
+		return false; // TODO: use cycle in a directed graph using DFS
+	}
+
+	private boolean hasCycleUnionFind() {
+		Map<V, V> parent = new HashMap<>(vertices.size());
+		Map<V, Integer> rank = new HashMap<>(vertices.size());
+
+		// populate parent as all vertices pointing to itself first
+		for (V vertex : vertices) {
+			parent.put(vertex, vertex);
+			rank.put(vertex, 0);
+		}
+
+		class Pair {
+			V u;
+			V v;
+			E wt;
+
+			Pair(V u, V v, E wt) {
+				this.u = u;
+				this.v = v;
+				this.wt = wt;
+			}
+
+			@Override
+			public int hashCode() {
+				final int prime = 31;
+				int result = 1;
+				result = prime * result + ((u == null) ? 0 : u.hashCode());
+				result = prime * result + ((v == null) ? 0 : v.hashCode());
+				result = prime * result + ((wt == null) ? 0 : wt.hashCode());
+				return result;
+			}
+
+			@SuppressWarnings("unchecked")
+			@Override
+			public boolean equals(Object obj) {
+				if (this == obj)
+					return true;
+				if (obj == null)
+					return false;
+				if (getClass() != obj.getClass())
+					return false;
+				Pair other = (Pair) obj;
+				if (other.wt.equals(wt) && (other.u.equals(u) && other.v.equals(v))
+						|| (other.u.equals(v) && other.v.equals(u))) {
+					return true;
+				}
+				return false;
+			}
+		}
+
+		// TODO: need to think of a better way to handle pair
+		List<Pair> pairs = new ArrayList<>();
+		for (Edge<V, E> edge : edges) {
+			V src = edge.v1;
+			V dest = edge.v2;
+			Pair pair = new Pair(src, dest, edge.wt);
+			if (pairs.contains(pair)) {
+				continue;
+			}
+			pairs.add(pair);
+			V u = find(parent, src);
+			V v = find(parent, dest);
+			if (u.equals(v)) {
+				return true;
+			} else {
+				union(parent, rank, u, v);
+			}
+		}
 		return false;
+	}
+
+	private void union(Map<V, V> parent, Map<V, Integer> rank, V v1, V v2) {
+		V findX = find(parent, v1);
+		V findY = find(parent, v2);
+		if (!findX.equals(findY)) {
+			int rankX = rank.get(findX);
+			int rankY = rank.get(findY);
+			if (rankX > rankY) {
+				parent.put(findY, findX);
+			} else {
+				parent.put(findX, findY);
+				if (rankX == rankY) {
+					rank.put(findY, rank.get(findY) + 1);
+				}
+			}
+		}
+	}
+
+	private V find(Map<V, V> parent, V v) {
+		if (!parent.get(v).equals(v)) {
+			// compress
+			parent.put(v, find(parent, parent.get(v)));
+		}
+		return parent.get(v);
 	}
 }

@@ -1,6 +1,7 @@
 package com.home.ds.graph;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -29,7 +30,10 @@ public class AdjListUnweightedGraph<V> implements UnweightedGraph<V> {
 
 	@Override
 	public void addVertex(V v) {
-		vertices.putIfAbsent(v, new ArrayList<>());
+		if (vertices.containsKey(v)) {
+			return;
+		}
+		vertices.put(v, new ArrayList<>());
 		count++;
 	}
 
@@ -133,7 +137,7 @@ public class AdjListUnweightedGraph<V> implements UnweightedGraph<V> {
 
 	@Override
 	public int getShortestPath(V start, V end) {
-		// TODO Auto-generated method stub
+		// TODO use Dijkastra for undirected, topological sort for directed acyclic
 		return 0;
 	}
 
@@ -151,8 +155,112 @@ public class AdjListUnweightedGraph<V> implements UnweightedGraph<V> {
 
 	@Override
 	public boolean hasCycle() {
+		if (count == 0)
+			return false;
 		if (isBidirectional)
-			return true;
+			return hasCycleUnionFind();
+		IStack<V> stack = new Stack<>();
+		Set<V> visited = new HashSet<>(count);
+		Set<V> inPath = new HashSet<>(count);
+		for (V start : vertices.keySet()) {
+			stack.push(start);
+			inPath.add(start);
+			while (!stack.isEmpty()) {
+				V popped = stack.pop();
+				visited.add(popped);
+				Iterator<V> adj = vertices.get(popped).iterator();
+				while (adj.hasNext()) {
+					V next = adj.next();
+					if (inPath.contains(next)) {
+						return true;
+					}
+					if (!visited.contains(next)) {
+						stack.push(next);
+					}
+				}
+			}
+			inPath.remove(start);
+			visited.clear();
+		}
 		return false;
 	}
+
+	private boolean hasCycleUnionFind() {
+		Map<V, V> parent = new HashMap<>(vertices.size());
+
+		// populate parent as all vertices pointing to itself first
+		for (V vertex : vertices.keySet()) {
+			parent.put(vertex, vertex);
+		}
+
+		class Pair {
+			V u;
+			V v;
+			
+			Pair(V u, V v) {
+				this.u = u;
+				this.v = v;
+			}
+
+			@Override
+			public int hashCode() {
+				final int prime = 31;
+				int result = 1;
+				result = prime * result + ((u == null) ? 0 : u.hashCode());
+				result = prime * result + ((v == null) ? 0 : v.hashCode());
+				return result;
+			}
+
+			@SuppressWarnings("unchecked")
+			@Override
+			public boolean equals(Object obj) {
+				if (this == obj)
+					return true;
+				if (obj == null)
+					return false;
+				if (getClass() != obj.getClass())
+					return false;
+				Pair other = (Pair) obj;
+				if ((other.u.equals(u) && other.v.equals(v)) || (other.u.equals(v) && other.v.equals(u))) {
+					return true;
+				}
+				return false;
+			}
+		}
+
+		// TODO: need to think of a better way to handle pair
+		List<Pair> pairs = new ArrayList<>();
+		for (V vertex : vertices.keySet()) {
+			for (V adj : vertices.get(vertex)) {
+				Pair pair = new Pair(vertex, adj);
+				if (pairs.contains(pair)) {
+					continue;
+				}
+				pairs.add(pair);
+				V u = find(parent, vertex);
+				V v = find(parent, adj);
+				if (u.equals(v)) {
+					return true;
+				} else {
+					union(parent, u, v);
+				}
+			}
+		}
+
+		return false;
+	}
+
+	private void union(Map<V, V> parent, V v1, V v2) {
+		V findX = find(parent, v1);
+		V findY = find(parent, v2);
+		parent.put(findX, findY);
+	}
+
+	private V find(Map<V, V> parent, V v) {
+		if (parent.get(v).equals(v)) {
+			return parent.get(v);
+		}
+		return find(parent, parent.get(v));
+	}
+
 }

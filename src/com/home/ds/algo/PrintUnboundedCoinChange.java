@@ -35,6 +35,7 @@ public class PrintUnboundedCoinChange {
 			int index) {
 		if (val == 0) {
 			result.add(new ArrayList<>(current));
+			return;
 		}
 		if (val < 0)
 			return;
